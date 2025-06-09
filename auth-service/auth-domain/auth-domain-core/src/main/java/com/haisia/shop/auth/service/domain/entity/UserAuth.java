@@ -2,24 +2,37 @@ package com.haisia.shop.auth.service.domain.entity;
 
 import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.common.domain.entity.AggregateRoot;
-import com.haisia.shop.common.domain.valueobject.UserId;
+import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.Builder;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserAuth extends AggregateRoot<UserId> {
+public class UserAuth extends AggregateRoot<UserAuthId> {
   private final String email;
   private final String hashedPassword;
 
+  public void initialize() {
+    setId(new UserAuthId(UUID.randomUUID()));
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getHashedPassword() {
+    return hashedPassword;
+  }
+
   @Builder
-  private UserAuth(UserId userId, String email, String hashedPassword) {
-    super.setId(userId);
+  private UserAuth(UserAuthId userAuthId, String email, String hashedPassword) {
+    super.setId(userAuthId);
     this.email = email;
     this.hashedPassword = hashedPassword;
   }
 
-  public void validateUserAuth() {
+  public void validate() {
     validateEmail();
   }
 
@@ -45,13 +58,5 @@ public class UserAuth extends AggregateRoot<UserId> {
     if (!matcher.matches()) {
       throw new UserAuthDomainException("잘못된 email 형식입니다.");
     }
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public String getHashedPassword() {
-    return hashedPassword;
   }
 }

@@ -6,6 +6,7 @@ include 'auth-service'
 
 include 'infrastructure'
 include 'infrastructure:saga'
+include 'infrastructure:outbox'
 
 include 'common'
 include 'common:common-application'

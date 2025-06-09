@@ -1,4 +1,4 @@
-package com.haisia.shop.common.domain.valueobject;
+package com.haisia.shop.common.domain.valueobject.id;
 
 import java.util.Objects;
 

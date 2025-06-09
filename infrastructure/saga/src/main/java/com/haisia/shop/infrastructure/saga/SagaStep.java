@@ -1,4 +1,4 @@
-package com.haisia.job.infrastructure.saga;
+package com.haisia.shop.infrastructure.saga;
 
 public interface SagaStep<T> {
     void process(T data);
