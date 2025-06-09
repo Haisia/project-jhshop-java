@@ -4,5 +4,18 @@ include 'eureka-service'
 include 'gateway-service'
 include 'auth-service'
 
+include 'infrastructure'
+include 'infrastructure:saga'
+
 include 'common'
 include 'common:common-application'
+include 'common:common-domain'
+
+include 'auth-service'
+include 'auth-service:auth-application'
+include 'auth-service:auth-container'
+include 'auth-service:auth-dataaccess'
+include 'auth-service:auth-domain'
+include 'auth-service:auth-domain:auth-application-service'
+include 'auth-service:auth-domain:auth-domain-core'
+include 'auth-service:auth-messaging'
