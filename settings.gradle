@@ -1,2 +1,8 @@
 rootProject.name = 'project-jhshop-java'
 
+include 'eureka-service'
+include 'gateway-service'
+include 'auth-service'
+
+include 'common'
+include 'common:common-application'
