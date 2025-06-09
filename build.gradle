@@ -1,0 +1,48 @@
+plugins {
+  id 'base'
+}
+
+group = "${projectGroup}"
+version = "${projectVersion}"
+
+subprojects {
+  group = rootProject.group
+  version = rootProject.version
+
+  repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://packages.confluent.io/maven/' }
+  }
+
+  plugins.withType(JavaPlugin).configureEach {
+    java {
+      toolchain {
+        languageVersion = JavaLanguageVersion.of("${javaVersion}")
+      }
+    }
+    dependencies {
+      compileOnly "org.projectlombok:lombok:$lombokVersion"
+      annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+      testImplementation "org.springframework.boot:spring-boot-starter-test"
+      testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    }
+    configurations {
+      compileOnly {
+        extendsFrom annotationProcessor
+      }
+    }
+    tasks.named('test') {
+      useJUnitPlatform()
+    }
+  }
+
+  plugins.withId('io.spring.dependency-management') {
+    dependencyManagement {
+      imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+      }
+    }
+  }
+}
