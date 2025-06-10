@@ -1,6 +1,7 @@
 package com.haisia.shop.user.service.dataaccess.userprofile.mapper;
 
 import com.haisia.shop.common.dataaccess.jpa.mapper.CommonDataaccessMapper;
+import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import com.haisia.shop.common.domain.valueobject.id.UserProfileId;
@@ -22,6 +23,7 @@ public class UserProfileDataaccessMapper {
       .email(userProfileJpaEntity.getEmail())
       .address(commonDataaccessMapper.addressJpaVoToAddress(userProfileJpaEntity.getAddress()))
       .phoneNumber(new PhoneNumber(userProfileJpaEntity.getPhoneNumber()))
+      .balance(new Money(userProfileJpaEntity.getBalance()))
       .build();
   }
 
@@ -32,6 +34,7 @@ public class UserProfileDataaccessMapper {
       .email(userProfile.getEmail())
       .address(commonDataaccessMapper.addressToAddressJpaVo(userProfile.getAddress()))
       .phoneNumber(userProfile.getPhoneNumber().number())
+      .balance(userProfile.getBalance().amount())
       .build();
   }
 

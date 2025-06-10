@@ -5,6 +5,7 @@ import com.haisia.shop.common.dataaccess.jpa.valueobject.AddressJpaVo;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class UserProfileJpaEntity extends BaseJpaEntity {
   @Embedded
   private AddressJpaVo address;
   private String phoneNumber;
+  private BigDecimal balance;
 
   @Override
   public boolean equals(Object o) {
