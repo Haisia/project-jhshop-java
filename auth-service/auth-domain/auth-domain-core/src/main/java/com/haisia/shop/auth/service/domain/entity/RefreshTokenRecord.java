@@ -10,7 +10,7 @@ import java.util.UUID;
 public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
   private final String token;
   private final UserAuthId userAuthId;
-  private final int refreshCount;
+  private int refreshCount;
 
   private boolean available;
 
@@ -36,6 +36,10 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
 
   public void setAvailable(boolean available) {
     this.available = available;
+  }
+
+  public void addRefreshCount() {
+    refreshCount++;
   }
 
   @Builder

@@ -2,7 +2,7 @@ package com.haisia.shop.auth.service.domain.handler.helper;
 
 import com.haisia.shop.auth.service.domain.RefreshTokenRecordDomainService;
 import com.haisia.shop.auth.service.domain.entity.RefreshTokenRecord;
-import com.haisia.shop.auth.service.domain.exception.RefreshTokenDomainException;
+import com.haisia.shop.auth.service.domain.exception.RefreshTokenRecordDomainException;
 import com.haisia.shop.auth.service.domain.ports.output.repository.RefreshTokenRecordRepository;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class RefreshTokenHelper {
 
     RefreshTokenRecord savedRefreshTokenRecord = refreshTokenRecordRepository.save(createdRefreshTokenRecord);
     if (savedRefreshTokenRecord == null) {
-      throw new RefreshTokenDomainException("RefreshTokenRecord 저장을 실패하였습니다.");
+      throw new RefreshTokenRecordDomainException("RefreshTokenRecord 저장을 실패하였습니다.");
     }
   }
 }

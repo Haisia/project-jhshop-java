@@ -1,15 +1,11 @@
 package com.haisia.shop.auth.service.domain.handler;
 
-import com.haisia.shop.auth.service.domain.RefreshTokenRecordDomainService;
 import com.haisia.shop.auth.service.domain.config.JwtTokenProvider;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserCommand;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserResponse;
-import com.haisia.shop.auth.service.domain.entity.RefreshTokenRecord;
 import com.haisia.shop.auth.service.domain.entity.UserAuth;
-import com.haisia.shop.auth.service.domain.exception.RefreshTokenDomainException;
 import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.auth.service.domain.handler.helper.RefreshTokenHelper;
-import com.haisia.shop.auth.service.domain.ports.output.repository.RefreshTokenRecordRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

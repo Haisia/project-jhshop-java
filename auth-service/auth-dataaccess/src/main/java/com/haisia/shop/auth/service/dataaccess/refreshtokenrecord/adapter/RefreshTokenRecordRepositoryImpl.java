@@ -8,6 +8,8 @@ import com.haisia.shop.auth.service.domain.ports.output.repository.RefreshTokenR
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Component
 public class RefreshTokenRecordRepositoryImpl implements RefreshTokenRecordRepository {
@@ -17,7 +19,12 @@ public class RefreshTokenRecordRepositoryImpl implements RefreshTokenRecordRepos
 
   @Override
   public RefreshTokenRecord save(RefreshTokenRecord refreshTokenRecord) {
-    RefreshTokenRecordJpaEntity jpaEntity = mapper.refreshTokenRecordTokRefreshTokenRecordJpaEntity(refreshTokenRecord);
+    RefreshTokenRecordJpaEntity jpaEntity = mapper.refreshTokenRecordToRefreshTokenRecordJpaEntity(refreshTokenRecord);
     return mapper.refreshTokenRecordJpaEntityToRefreshTokenRecord(repository.save(jpaEntity));
+  }
+
+  @Override
+  public Optional<RefreshTokenRecord> findByRefreshToken(String refreshToken) {
+    return repository.findByToken(refreshToken).map(mapper::refreshTokenRecordJpaEntityToRefreshTokenRecord);
   }
 }

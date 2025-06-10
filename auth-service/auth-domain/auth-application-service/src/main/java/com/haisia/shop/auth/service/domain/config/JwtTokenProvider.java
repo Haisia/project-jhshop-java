@@ -24,7 +24,7 @@ public class JwtTokenProvider {
     Map<String, Object> claims = new HashMap<>();
     String jti = UUID.randomUUID().toString();
     claims.put("jti", jti);
-    claims.put("id", userAuthId);
+    claims.put("id", userAuthId.getValue().toString());
     claims.put("email", email);
 
     return Jwts.builder()
@@ -61,10 +61,10 @@ public class JwtTokenProvider {
   }
 
   public UserAuthId getUserAuthId(String token) {
-    return new UserAuthId(UUID.fromString(getClaims(token).get("id", String.class)));
+    return new UserAuthId(UUID.fromString((String) getClaims(token).get("id")));
   }
 
   public String getEmail(String token) {
-    return getClaims(token).get("email", String.class);
+    return (String) getClaims(token).get("email");
   }
 }

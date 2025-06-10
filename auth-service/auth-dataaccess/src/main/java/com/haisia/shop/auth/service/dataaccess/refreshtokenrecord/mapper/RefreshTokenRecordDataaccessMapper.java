@@ -21,7 +21,7 @@ public class RefreshTokenRecordDataaccessMapper {
       .build();
   }
 
-  public RefreshTokenRecordJpaEntity refreshTokenRecordTokRefreshTokenRecordJpaEntity(
+  public RefreshTokenRecordJpaEntity refreshTokenRecordToRefreshTokenRecordJpaEntity(
     RefreshTokenRecord refreshTokenRecord
   ) {
     return RefreshTokenRecordJpaEntity.builder()

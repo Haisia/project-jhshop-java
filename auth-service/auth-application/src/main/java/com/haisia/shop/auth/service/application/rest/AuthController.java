@@ -2,6 +2,8 @@ package com.haisia.shop.auth.service.application.rest;
 
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserCommand;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserResponse;
+import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenCommand;
+import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
 import com.haisia.shop.auth.service.domain.ports.input.service.AuthApplicationService;
@@ -32,6 +34,16 @@ public class AuthController {
     LoginUserResponse response = authApplicationService.loginUser(command);
     log.info("로그인에 성공하였습니다. refreshToken: {}", response.refreshToken());
     ResponseData<LoginUserResponse> data = ResponseData.success(response);
+    return ResponseEntity.ok(data);
+  }
+
+  @PostMapping("/refresh")
+  public ResponseEntity<ResponseData<RefreshAccessTokenResponse>> refreshAccessToken(
+    @RequestBody RefreshAccessTokenCommand command
+  ) {
+    RefreshAccessTokenResponse response = authApplicationService.refreshAccessToken(command);
+    log.info("AccessToken 발급에 성공하였습니다. accessToken: {}", response.accessToken());
+    ResponseData<RefreshAccessTokenResponse> data = ResponseData.success(response);
     return ResponseEntity.ok(data);
   }
 
