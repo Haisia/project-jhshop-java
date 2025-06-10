@@ -8,6 +8,8 @@ import com.haisia.shop.auth.service.domain.ports.output.repository.UserAuthRepos
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Component
 public class UserAuthRepositoryImpl implements UserAuthRepository {
@@ -19,5 +21,10 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
   public UserAuth save(UserAuth userAuth) {
     UserAuthJpaEntity savedJpaEntity = repository.save(mapper.userAuthToJpaEntity(userAuth));
     return mapper.jpaEntityToUserAuth(savedJpaEntity);
+  }
+
+  @Override
+  public Optional<UserAuth> findByEmail(String email) {
+    return repository.findByEmail(email).map(mapper::jpaEntityToUserAuth);
   }
 }

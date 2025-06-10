@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface UserAuthRepository {
   UserAuth save(UserAuth userAuth);
+  Optional<UserAuth> findByEmail(String email);
 }
