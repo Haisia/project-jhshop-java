@@ -6,13 +6,13 @@ import lombok.Builder;
 
 import java.time.ZonedDateTime;
 
-public class LoginSucceedEvent extends DomainEvent {
+public class UserLoginSucceedEvent extends DomainEvent {
   private final UserAuthId userAuthId;
   private final String email;
   private final String ipAddress;
 
   @Builder
-  public LoginSucceedEvent(
+  private UserLoginSucceedEvent(
     UserAuthId userAuthId,
     String email,
     String ipAddress,

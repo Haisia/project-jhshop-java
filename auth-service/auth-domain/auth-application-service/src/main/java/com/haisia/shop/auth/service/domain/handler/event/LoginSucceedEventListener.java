@@ -1,7 +1,7 @@
 package com.haisia.shop.auth.service.domain.handler.event;
 
 import com.haisia.shop.auth.service.domain.entity.UserLoginRecord;
-import com.haisia.shop.auth.service.domain.event.LoginSucceedEvent;
+import com.haisia.shop.auth.service.domain.event.UserLoginSucceedEvent;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
 import com.haisia.shop.common.domain.valueobject.id.UserLoginRecordId;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class LoginSucceedEventListener {
   @Async
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
   @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public void handleLoginSucceed(LoginSucceedEvent event) {
+  public void handleLoginSucceed(UserLoginSucceedEvent event) {
 
     UserLoginRecord newRecord = UserLoginRecord.builder()
       .id(new UserLoginRecordId(UUID.randomUUID()))
