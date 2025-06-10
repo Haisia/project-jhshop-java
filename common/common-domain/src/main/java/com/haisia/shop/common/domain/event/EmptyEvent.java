@@ -1,9 +1,12 @@
 package com.haisia.shop.common.domain.event;
 
-public final class EmptyEvent implements DomainEvent<Void> {
+import java.time.ZonedDateTime;
 
-  public static final EmptyEvent INSTANCE = new EmptyEvent();
+public final class EmptyEvent extends DomainEvent {
 
-  public EmptyEvent() {
+  public static final EmptyEvent INSTANCE = new EmptyEvent(ZonedDateTime.now());
+
+  EmptyEvent(ZonedDateTime createdAt) {
+    super(createdAt);
   }
 }

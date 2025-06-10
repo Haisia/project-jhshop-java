@@ -1,0 +1,57 @@
+package com.haisia.shop.auth.service.domain.handler.event;
+
+import com.haisia.shop.auth.service.domain.entity.UserLoginRecord;
+import com.haisia.shop.auth.service.domain.event.LoginSuccessEvent;
+import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
+import com.haisia.shop.common.domain.valueobject.id.UserLoginRecordId;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.UUID;
+
+import static com.haisia.shop.common.domain.DomainConstants.UTC;
+
+@Slf4j
+@RequiredArgsConstructor
+@Component
+public class LoginAttemptEventListener {
+  private final UserLoginRecordRepository userLoginRecordRepository;
+
+  @Async
+  @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  public void handleLoginAttempt(LoginSuccessEvent event) {
+
+    UserLoginRecord newRecord = UserLoginRecord.builder()
+      .id(new UserLoginRecordId(UUID.randomUUID()))
+      .userAuthId(event.getUserAuthId())
+      .email(event.getEmail())
+      .succeedAt(event.getCreatedAt().toInstant())
+      .ipAddress(event.getIpAddress())
+      .isFirstLoginOfDay(false)
+      .build();
+
+    LocalDate today = event.getCreatedAt().toLocalDate();
+    boolean hasPriorLoginToday = userLoginRecordRepository.existsByUserAuthIdAndCreatedAtBetween(
+      event.getUserAuthId(),
+      today.atStartOfDay(ZoneId.of(UTC)).toInstant(),
+      today.plusDays(1).atStartOfDay(ZoneId.of(UTC)).toInstant()
+    );
+
+    if (!hasPriorLoginToday) {
+      newRecord.setFirstLoginOfDay(true);
+      // TODO: 카프카 메세지 발행
+    }
+
+    userLoginRecordRepository.save(newRecord);
+  }
+}

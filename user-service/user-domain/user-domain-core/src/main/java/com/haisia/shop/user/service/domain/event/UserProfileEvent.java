@@ -5,7 +5,7 @@ import com.haisia.shop.user.service.domain.entity.UserProfile;
 
 import java.time.ZonedDateTime;
 
-public abstract class UserProfileEvent implements DomainEvent<UserProfile> {
+public abstract class UserProfileEvent implements DomainEvent {
   private final UserProfile userProfile;
   private final ZonedDateTime createdAt;
 
