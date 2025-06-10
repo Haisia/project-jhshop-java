@@ -4,7 +4,7 @@ import com.haisia.shop.auth.service.domain.config.JwtTokenProvider;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserCommand;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserResponse;
 import com.haisia.shop.auth.service.domain.entity.UserAuth;
-import com.haisia.shop.auth.service.domain.event.LoginSuccessEvent;
+import com.haisia.shop.auth.service.domain.event.LoginSucceedEvent;
 import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.auth.service.domain.handler.helper.RefreshTokenHelper;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserAuthRepository;
@@ -51,7 +51,7 @@ public class LoginUserCommandHandler {
     refreshTokenHelper.initiateAndPersist(refreshToken, foundUserAuth.getId());
 
     eventPublisher.publishEvent(
-      LoginSuccessEvent.builder()
+      LoginSucceedEvent.builder()
         .userAuthId(foundUserAuth.getId())
         .email(command.email())
         .ipAddress(TEMP_IP_ADDRESS)
