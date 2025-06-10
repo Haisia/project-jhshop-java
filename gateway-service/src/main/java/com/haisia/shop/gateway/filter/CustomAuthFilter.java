@@ -1,6 +1,5 @@
 package com.haisia.shop.gateway.filter;
 
-import com.haisia.shop.common.application.dto.ResponseData;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -43,16 +42,16 @@ public class CustomAuthFilter implements GlobalFilter {
     String authorizationHeader = authorizationHeaders.getFirst();
 
     return authWebClient.post()
-      .uri("lb://AUTH-SERVER/auth/v1/token/validate")
+      .uri("lb://AUTH-SERVICE/auth/v1/token/validate")
       .header(HttpHeaders.AUTHORIZATION, authorizationHeader)
       .retrieve()
       .onStatus(HttpStatusCode::isError, clientResponse ->
         Mono.error(new RuntimeException("Auth service returned an error: " + clientResponse.statusCode()))
       )
-      .bodyToMono(new ParameterizedTypeReference<ResponseData<ResponseValidateToken>>() {})
+      .bodyToMono(new ParameterizedTypeReference<ResponseValidateToken>() {})
       .flatMap(responseData -> {
-        if (responseData != null && responseData.getData() != null) {
-          ResponseValidateToken validationResult = responseData.getData();
+        if (responseData != null) {
+          ResponseValidateToken validationResult = responseData;
 
           if (validationResult.getUserId() != null) {
             ServerHttpRequest finalMutatedRequest = requestAfterDefense.mutate()

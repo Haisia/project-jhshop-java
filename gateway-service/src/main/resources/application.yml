@@ -13,11 +13,11 @@ eureka:
 
 spring:
   application:
-    name: gateway-server
+    name: gateway-service
   cloud:
     gateway:
       routes:
-        - id: auth-server
-          uri: lb://AUTH-SERVER
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**

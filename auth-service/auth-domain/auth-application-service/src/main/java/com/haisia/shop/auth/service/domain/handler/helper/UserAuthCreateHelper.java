@@ -1,7 +1,7 @@
 package com.haisia.shop.auth.service.domain.handler.helper;
 
 import com.haisia.shop.auth.service.domain.UserAuthDomainService;
-import com.haisia.shop.auth.service.domain.dto.create.CreateUserAuthCommand;
+import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
 import com.haisia.shop.auth.service.domain.entity.UserAuth;
 import com.haisia.shop.auth.service.domain.event.UserAuthCreatedEvent;
 import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
@@ -28,13 +28,16 @@ public class UserAuthCreateHelper {
   * 2. 계정생성
   * */
   @Transactional
-  public UserAuthCreatedEvent hashPasswordAndPersist(CreateUserAuthCommand command) {
-    UserAuth userAuth = mapper.createUserAuthCommandToUserAuth(command, hashPassword(command.password()));
-    UserAuthCreatedEvent event = service.validateAndInitiateUserAuth(userAuth, command.address(), command.phoneNumber());
+  public UserAuthCreatedEvent hashPasswordAndPersist(RegisterUserCommand command) {
+    UserAuth userAuth = mapper.registerUserCommandToUserAuth(command, hashPassword(command.password()));
+    UserAuthCreatedEvent event = service.validateAndInitiate(userAuth, command.address(), command.phoneNumber());
 
-    repository.save(userAuth).orElseThrow(() -> new UserAuthDomainException("UserAuth 를 저장 할 수 없습니다."));
+    UserAuth savedUserAuth = repository.save(userAuth);
+    if (savedUserAuth == null) {
+      throw new UserAuthDomainException("UserAuth 저장에 실패했습니다.");
+    }
 
-    log.info("UserAuth 가 생성되었습니다. id: {}", event.getUserAuth().getId().getValue());
+    log.info("UserAuth 를 저장하였습니다. id: {}", event.getUserAuth().getId().getValue());
 
     return event;
   }

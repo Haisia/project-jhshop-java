@@ -6,9 +6,4 @@ public final class EmptyEvent implements DomainEvent<Void> {
 
   public EmptyEvent() {
   }
-
-  @Override
-  public void fire() {
-
-  }
 }

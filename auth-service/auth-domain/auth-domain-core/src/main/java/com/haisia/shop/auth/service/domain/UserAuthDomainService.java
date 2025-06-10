@@ -7,6 +7,6 @@ import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 
 public interface UserAuthDomainService {
 
-  UserAuthCreatedEvent validateAndInitiateUserAuth(UserAuth userAuth, Address address, PhoneNumber phoneNumber);
+  UserAuthCreatedEvent validateAndInitiate(UserAuth userAuth, Address address, PhoneNumber phoneNumber);
 
 }

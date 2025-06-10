@@ -15,10 +15,10 @@ import static com.haisia.shop.common.domain.DomainConstants.UTC;
 public class UserAuthDomainServiceImpl implements UserAuthDomainService {
 
   @Override
-  public UserAuthCreatedEvent validateAndInitiateUserAuth(UserAuth userAuth, Address address, PhoneNumber phoneNumber) {
+  public UserAuthCreatedEvent validateAndInitiate(UserAuth userAuth, Address address, PhoneNumber phoneNumber) {
     userAuth.validate();
     userAuth.initialize();
-    log.info("UserAuth with id: {} 가 초기화 되었습니다.", userAuth.getId().getValue());
+    log.info("UserAuth 가 초기화 되었습니다. id: {}", userAuth.getId().getValue());
 
     return new UserAuthCreatedEvent(
       userAuth,

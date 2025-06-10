@@ -5,5 +5,5 @@ import com.haisia.shop.auth.service.domain.entity.UserAuth;
 import java.util.Optional;
 
 public interface UserAuthRepository {
-  Optional<UserAuth> save(UserAuth userAuth);
+  UserAuth save(UserAuth userAuth);
 }

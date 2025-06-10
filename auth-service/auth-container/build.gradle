@@ -1,0 +1,19 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot' version "${springBootVersion}"
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+}
+
+dependencies {
+  implementation project(":auth-service:auth-application")
+  implementation project(":auth-service:auth-dataaccess")
+  implementation project(":auth-service:auth-domain:auth-application-service")
+  implementation project(":auth-service:auth-domain:auth-domain-core")
+
+  implementation "org.springframework.boot:spring-boot-starter"
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+}
+
+bootBuildImage {
+  imageName = "${project.group}/auth.service:${project.version}"
+}

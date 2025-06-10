@@ -1,5 +1,8 @@
 package com.haisia.shop.common.domain.valueobject;
 
+import lombok.Builder;
+
+@Builder
 public record Address (
   String country,
   String city,
@@ -7,5 +10,4 @@ public record Address (
   String zipCode,
   String detail
 ) {
-
 }

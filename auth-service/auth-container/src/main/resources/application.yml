@@ -1,0 +1,40 @@
+server:
+  port: 9001
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    hostname: localhost
+
+spring:
+  application:
+    name: auth-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB_AUTH}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+jwt:
+  refresh-token:
+    key: ${JWT_REFRESH_TOKEN_KEY}
+    expiration-ms: 604800000
+  access-token:
+    key: ${JWT_ACCESS_TOKEN_KEY}
+    expiration-ms: 300000
+
+feign:
+  secret:
+    key: ${FEIGN_SECRET_KEY}

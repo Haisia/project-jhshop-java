@@ -1,21 +1,22 @@
 package com.haisia.shop.auth.service.domain.event;
 
 import com.haisia.shop.auth.service.domain.entity.UserAuth;
+import com.haisia.shop.common.domain.event.Payloadable;
 import com.haisia.shop.common.domain.event.payload.UserAuthCreatedEventPayload;
-import com.haisia.shop.common.domain.event.publisher.DomainEventPublisher;
 import com.haisia.shop.common.domain.valueobject.Address;
 import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-public class UserAuthCreatedEvent extends UserAuthEvent {
+public class UserAuthCreatedEvent extends UserAuthEvent implements Payloadable {
   private final Address address;
   private final PhoneNumber phoneNumber;
 
-  public UserAuthCreatedEventPayload payload() {
+  @Override
+  public UserAuthCreatedEventPayload payload(UUID sagaId) {
     return new UserAuthCreatedEventPayload(
-      UUID.randomUUID().toString(),
+      sagaId,
       getCreatedAt(),
       getUserAuth().getId().getValue().toString(),
       getUserAuth().getEmail(),
