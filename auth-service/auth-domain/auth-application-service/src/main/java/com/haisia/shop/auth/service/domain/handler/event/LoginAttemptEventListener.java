@@ -6,7 +6,6 @@ import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginReco
 import com.haisia.shop.common.domain.valueobject.id.UserLoginRecordId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -29,7 +28,7 @@ public class LoginAttemptEventListener {
   @Async
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
   @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public void handleLoginAttempt(LoginSuccessEvent event) {
+  public void handleLoginSucceed(LoginSuccessEvent event) {
 
     UserLoginRecord newRecord = UserLoginRecord.builder()
       .id(new UserLoginRecordId(UUID.randomUUID()))
