@@ -2,10 +2,7 @@ package com.haisia.shop.user.service.dataaccess.userprofile.entity;
 
 import com.haisia.shop.common.dataaccess.jpa.entity.BaseJpaEntity;
 import com.haisia.shop.common.dataaccess.jpa.valueobject.AddressJpaVo;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
@@ -22,7 +19,9 @@ public class UserProfileJpaEntity extends BaseJpaEntity {
 
   @Id
   private UUID id;
+  @Column(unique = true, nullable = false)
   private UUID userAuthId;
+  @Column(unique = true, nullable = false)
   private String email;
   @Embedded
   private AddressJpaVo address;
