@@ -5,6 +5,7 @@ import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
 import com.haisia.shop.auth.service.domain.event.UserAuthCreatedEvent;
 import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.auth.service.domain.handler.helper.UserAuthCreateHelper;
+import com.haisia.shop.auth.service.domain.handler.helper.UserProfileHelper;
 import com.haisia.shop.auth.service.domain.mapper.UserAuthDataMapper;
 import com.haisia.shop.auth.service.domain.mapper.UserServiceFeignMapper;
 import com.haisia.shop.auth.service.domain.ports.output.client.feign.UserServiceClient;
@@ -23,24 +24,13 @@ public class UserAuthCreateCommandHandler {
 
   private final UserAuthCreateHelper createHelper;
   private final UserAuthDataMapper mapper;
-  private final UserServiceClient userServiceClient;
-  private final UserServiceFeignMapper userServiceFeignMapper;
+  private final UserProfileHelper userProfileHelper;
 
-  @Value("${feign.secret.key}")
-  private String feignSecretKey;
 
   @Transactional
   public RegisterUserResponse registerUser(RegisterUserCommand command) {
     UserAuthCreatedEvent event = createHelper.hashPasswordAndPersist(command);
-
-    CreateUserProfileCommand createUserProfileCommand = userServiceFeignMapper.registerUserCommandToCreateUserProfileCommand(
-      command,
-      event.getUserAuth().getId().getValue()
-    );
-    ResponseEntity<?> userProfileFeignResult = userServiceClient.createUserProfile(feignSecretKey, createUserProfileCommand);
-    if (userProfileFeignResult.getStatusCode().isError()) {
-      throw new UserAuthDomainException("UserProfile 생성에 실패하였습니다.");
-    }
+    userProfileHelper.createUserProfile(command, event.getUserAuth().getId().getValue());
 
     RegisterUserResponse response = RegisterUserResponse.from(event.getUserAuth());
     return response;
