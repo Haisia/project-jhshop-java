@@ -3,6 +3,7 @@ package com.haisia.shop.user.service.messaging.listener;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;
+import com.haisia.shop.common.messaging.EventPayloadFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -17,20 +18,14 @@ import java.util.function.Consumer;
 @Component
 public class UserLoggedInFirstTodayMessageListener {
 
-  private final ObjectMapper objectMapper;
+  private final EventPayloadFactory eventPayloadFactory;
 
   @Transactional
   @Bean
   public Consumer<Message<String>> handleUserLoggedInFirstToday() {
     return message -> {
-//      log.info("############# {}", message);
-
-      try {
-        UserLoggedInFirstTodayEventPayload payload = objectMapper.readValue(message.getPayload(), UserLoggedInFirstTodayEventPayload.class);
-        log.info("############# 페이로드 : {}", payload);
-      } catch (JsonProcessingException e) {
-        throw new RuntimeException(e);
-      }
+      var payload = eventPayloadFactory.from(message);
+      log.info("############# 페이로드 : {}", payload);
 
     };
   }

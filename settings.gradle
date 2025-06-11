@@ -12,6 +12,7 @@ include 'common'
 include 'common:common-application'
 include 'common:common-domain'
 include 'common:common-dataaccess'
+include 'common:common-messaging'
 
 include 'auth-service'
 include 'auth-service:auth-application'
