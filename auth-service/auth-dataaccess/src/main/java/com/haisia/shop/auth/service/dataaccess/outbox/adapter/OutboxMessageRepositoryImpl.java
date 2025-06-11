@@ -6,7 +6,7 @@ import com.haisia.shop.auth.service.dataaccess.outbox.entity.OutboxMessageJpaEnt
 import com.haisia.shop.auth.service.dataaccess.outbox.mapper.OutboxMessageDataaccessMapper;
 import com.haisia.shop.auth.service.dataaccess.outbox.repository.OutboxMessageJpaRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.OutboxMessageRepository;
-import com.haisia.shop.common.domain.event.OutboxMessage;
+import com.haisia.shop.infrastructure.outbox.OutboxMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

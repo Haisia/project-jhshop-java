@@ -1,9 +1,9 @@
-package com.haisia.shop.common.domain.event;
+package com.haisia.shop.infrastructure.outbox;
 
 import com.haisia.shop.common.domain.event.payload.EventPayload;
 import lombok.Builder;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class OutboxMessage {
@@ -11,7 +11,7 @@ public class OutboxMessage {
   private final UUID aggregateId;
   private final String aggregateType;
   private final String eventName;
-  private final Instant createdAt;
+  private final LocalDateTime createdAt;
   private final EventPayload payload;
 
   @Builder
@@ -20,7 +20,7 @@ public class OutboxMessage {
     UUID aggregateId,
     String aggregateType,
     String eventName,
-    Instant createdAt,
+    LocalDateTime createdAt,
     EventPayload payload
   ) {
     this.sagaId = sagaId;
@@ -47,7 +47,7 @@ public class OutboxMessage {
     return eventName;
   }
 
-  public Instant getCreatedAt() {
+  public LocalDateTime getCreatedAt() {
     return createdAt;
   }
 

@@ -4,7 +4,8 @@ import com.haisia.shop.auth.service.domain.entity.UserLoginRecord;
 import com.haisia.shop.auth.service.domain.event.UserLoginSucceedEvent;
 import com.haisia.shop.auth.service.domain.ports.output.repository.OutboxMessageRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
-import com.haisia.shop.common.domain.event.OutboxMessage;
+import com.haisia.shop.infrastructure.outbox.OutboxMessage;
+import com.haisia.shop.infrastructure.outbox.OutboxMessageFactory;
 import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;
 import com.haisia.shop.common.domain.valueobject.id.UserLoginRecordId;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class LoginSucceedEventListener {
 
   private final UserLoginRecordRepository userLoginRecordRepository;
   private final OutboxMessageRepository outboxMessageRepository;
+  private final OutboxMessageFactory outboxMessageFactory;
 
   @Async
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
@@ -54,13 +56,15 @@ public class LoginSucceedEventListener {
     if (!hasPriorLoginToday) {
       newRecord.setFirstLoginOfDay(true);
 
-      OutboxMessage outboxMessage = OutboxMessage.builder()
-        .sagaId(UUID.randomUUID())
-        .aggregateId(newRecord.getId().getValue())
-        .aggregateType("UserLoginRecord")
-        .eventName("UserLoggedInFirstTodayEvent")
-        .payload(new UserLoggedInFirstTodayEventPayload())
-        .build();
+      UserLoggedInFirstTodayEventPayload userLoggedInFirstTodayEventPayload =
+        UserLoggedInFirstTodayEventPayload.builder()
+          .sagaId(UUID.randomUUID())
+          .aggregateId(newRecord.getId().getValue())
+          .userAuthId(event.getUserAuthId().getValue())
+          .loggedInTime(event.getCreatedAt().toLocalDateTime())
+          .build();
+
+      OutboxMessage outboxMessage = outboxMessageFactory.create(userLoggedInFirstTodayEventPayload);
 
       outboxMessageRepository.save(outboxMessage);
     }
