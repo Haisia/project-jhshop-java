@@ -1,0 +1,12 @@
+plugins {
+  id 'java-library'
+  id 'org.springframework.boot' version "${springBootVersion}"
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+}
+
+dependencies {
+  implementation project(":common:common-domain")
+
+  implementation "org.springframework.cloud:spring-cloud-starter-stream-kafka"
+  implementation "org.springframework.cloud:spring-cloud-function-context"
+}

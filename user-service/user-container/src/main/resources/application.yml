@@ -26,6 +26,16 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  cloud:
+    function:
+      definition: handleUserLoggedInFirstToday;
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        handleUserLoggedInFirstToday-in-0:
+          destination: UserLoggedInFirstToday.events
 
 feign:
   secret:

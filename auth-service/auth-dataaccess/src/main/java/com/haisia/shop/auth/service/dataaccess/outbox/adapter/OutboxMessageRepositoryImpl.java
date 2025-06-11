@@ -21,7 +21,6 @@ public class OutboxMessageRepositoryImpl implements OutboxMessageRepository {
   public OutboxMessage save(OutboxMessage message) {
     OutboxMessageJpaEntity jpaEntity = mapper.outboxMessageToOutboxMessageJpaEntity(message);
     OutboxMessageJpaEntity save = repository.save(jpaEntity);
-    ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 //    mapper.outboxMessageJpaEntityToOutboxMessage(save, jsonNode -> objectMapper.readValue(jsonNode, ))
     return null;
   }

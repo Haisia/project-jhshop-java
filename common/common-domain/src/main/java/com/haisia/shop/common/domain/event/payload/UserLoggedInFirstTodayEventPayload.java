@@ -1,5 +1,7 @@
 package com.haisia.shop.common.domain.event.payload;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -12,12 +14,13 @@ public class UserLoggedInFirstTodayEventPayload extends EventPayload {
   public static final String AGGREGATE_TYPE = "UserLoginRecord";
   public static final String EVENT_NAME = "UserLoggedInFirstToday";
 
+  @JsonCreator
   @Builder
-  private UserLoggedInFirstTodayEventPayload(
-    UUID sagaId,
-    UUID aggregateId,
-    UUID userAuthId,
-    LocalDateTime loggedInTime
+  protected UserLoggedInFirstTodayEventPayload(
+    @JsonProperty("sagaId") UUID sagaId,
+    @JsonProperty("aggregateId") UUID aggregateId,
+    @JsonProperty("userAuthId") UUID userAuthId,
+    @JsonProperty("loggedInTime") LocalDateTime loggedInTime
   ) {
     super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME);
     this.userAuthId = userAuthId;
