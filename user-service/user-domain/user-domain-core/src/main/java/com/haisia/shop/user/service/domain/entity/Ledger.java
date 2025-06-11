@@ -1,15 +1,19 @@
-package com.haisia.shop.user.service.domain.valueobject;
+package com.haisia.shop.user.service.domain.entity;
 
+import com.haisia.shop.common.domain.entity.BaseEntity;
 import com.haisia.shop.common.domain.exception.DomainException;
 import com.haisia.shop.common.domain.valueobject.Money;
+import com.haisia.shop.common.domain.valueobject.id.UserProfileId;
+import com.haisia.shop.user.service.domain.valueobject.LedgerReason;
+import com.haisia.shop.user.service.domain.valueobject.Mark;
+import com.haisia.shop.user.service.domain.valueobject.id.LedgerId;
 import lombok.*;
 
 import java.time.Instant;
 
-@ToString
-@EqualsAndHashCode
 @Getter
-public class Ledger {
+public class Ledger extends BaseEntity<LedgerId> {
+  private UserProfileId userProfileId;
   private final Mark mark;
   private final Money change;
   private final Money before;
@@ -17,7 +21,12 @@ public class Ledger {
   private final LedgerReason reason;
   private final Instant processedAt;
 
-  @Builder(access = AccessLevel.PRIVATE)
+  void initialize(UserProfileId userProfileId, LedgerId ledgerId) {
+    this.userProfileId = userProfileId;
+    super.setId(ledgerId);
+  }
+
+  @Builder
   private Ledger(Mark mark, Money change, Money before, LedgerReason reason, Instant processedAt) {
     if (mark == null || change == null || before == null || reason == null) {
       throw new DomainException("생성자 파라미터가 올바르지 않습니다.");

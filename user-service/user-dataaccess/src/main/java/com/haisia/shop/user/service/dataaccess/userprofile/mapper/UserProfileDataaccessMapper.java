@@ -16,7 +16,7 @@ public class UserProfileDataaccessMapper {
 
   private final CommonDataaccessMapper commonDataaccessMapper;
 
-  public UserProfile userProfileJpaEntityToUserProfile(UserProfileJpaEntity userProfileJpaEntity) {
+  public UserProfile toPojo(UserProfileJpaEntity userProfileJpaEntity) {
     return UserProfile.builder()
       .userProfileId(new UserProfileId(userProfileJpaEntity.getId()))
       .userAuthId(new UserAuthId(userProfileJpaEntity.getUserAuthId()))
@@ -27,7 +27,7 @@ public class UserProfileDataaccessMapper {
       .build();
   }
 
-  public UserProfileJpaEntity userProfileToUserProfileJpaEntity(UserProfile userProfile) {
+  public UserProfileJpaEntity toJpaEntity(UserProfile userProfile) {
     return UserProfileJpaEntity.builder()
       .id(userProfile.getId().getValue())
       .userAuthId(userProfile.getUserAuthId().getValue())

@@ -6,7 +6,6 @@ import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import com.haisia.shop.common.domain.valueobject.id.UserProfileId;
-import com.haisia.shop.user.service.domain.valueobject.Ledger;
 import com.haisia.shop.user.service.domain.valueobject.LedgerReason;
 import lombok.Builder;
 

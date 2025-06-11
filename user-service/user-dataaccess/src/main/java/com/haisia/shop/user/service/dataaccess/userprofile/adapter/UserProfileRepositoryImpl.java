@@ -20,13 +20,13 @@ public class UserProfileRepositoryImpl implements UserProfileRepository {
 
   @Override
   public UserProfile save(UserProfile userProfile) {
-    UserProfileJpaEntity savedEntity = repository.save(mapper.userProfileToUserProfileJpaEntity(userProfile));
-    return mapper.userProfileJpaEntityToUserProfile(savedEntity);
+    UserProfileJpaEntity savedEntity = repository.save(mapper.toJpaEntity(userProfile));
+    return mapper.toPojo(savedEntity);
   }
 
   @Override
   public Optional<UserProfile> findByUserAuthId(UserAuthId userAuthId) {
     return repository.findByUserAuthId(userAuthId.getValue())
-      .map(mapper::userProfileJpaEntityToUserProfile);
+      .map(mapper::toPojo);
   }
 }
