@@ -1,9 +1,7 @@
 package com.haisia.shop.common.domain.event.payload;
 
-import java.time.ZonedDateTime;
-import java.util.UUID;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public interface EventPayload {
-  UUID sagaId();
-  ZonedDateTime createdAt();
+  JsonNode toJsonNode();
 }

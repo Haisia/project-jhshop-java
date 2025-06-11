@@ -1,0 +1,41 @@
+package com.haisia.shop.auth.service.dataaccess.outbox.entity;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.haisia.shop.common.dataaccess.jpa.entity.BaseJpaEntity;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Type;
+
+import java.util.UUID;
+
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "outbox_message")
+@Entity
+public class OutboxMessageJpaEntity extends BaseJpaEntity {
+
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  private Long id;
+
+  @Column(nullable = false)
+  private UUID sagaId;
+
+  @Column(nullable = false)
+  private UUID aggregateId;
+
+  @Column(nullable = false)
+  private String aggregateType;
+
+  @Column(nullable = false)
+  private String eventName;
+
+  @Type(JsonType.class)
+  @Column(columnDefinition = "json")
+  private JsonNode payload;
+
+}

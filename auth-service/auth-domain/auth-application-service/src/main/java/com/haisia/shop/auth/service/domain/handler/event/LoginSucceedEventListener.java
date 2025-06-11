@@ -2,7 +2,10 @@ package com.haisia.shop.auth.service.domain.handler.event;
 
 import com.haisia.shop.auth.service.domain.entity.UserLoginRecord;
 import com.haisia.shop.auth.service.domain.event.UserLoginSucceedEvent;
+import com.haisia.shop.auth.service.domain.ports.output.repository.OutboxMessageRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
+import com.haisia.shop.common.domain.event.OutboxMessage;
+import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;
 import com.haisia.shop.common.domain.valueobject.id.UserLoginRecordId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +26,9 @@ import static com.haisia.shop.common.domain.DomainConstants.UTC;
 @RequiredArgsConstructor
 @Component
 public class LoginSucceedEventListener {
+
   private final UserLoginRecordRepository userLoginRecordRepository;
+  private final OutboxMessageRepository outboxMessageRepository;
 
   @Async
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
@@ -48,7 +53,16 @@ public class LoginSucceedEventListener {
 
     if (!hasPriorLoginToday) {
       newRecord.setFirstLoginOfDay(true);
-      // TODO: 카프카 메세지 발행
+
+      OutboxMessage outboxMessage = OutboxMessage.builder()
+        .sagaId(UUID.randomUUID())
+        .aggregateId(newRecord.getId().getValue())
+        .aggregateType("UserLoginRecord")
+        .eventName("UserLoggedInFirstTodayEvent")
+        .payload(new UserLoggedInFirstTodayEventPayload())
+        .build();
+
+      outboxMessageRepository.save(outboxMessage);
     }
 
     userLoginRecordRepository.save(newRecord);
