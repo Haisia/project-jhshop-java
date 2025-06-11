@@ -28,13 +28,13 @@ spring:
         show_sql: true
   cloud:
     function:
-      definition: handleUserLoggedInFirstToday;
+      definition: processUserLoggedInFirstToday;
     stream:
       kafka:
         binder:
           brokers: localhost:9092
       bindings:
-        handleUserLoggedInFirstToday-in-0:
+        processUserLoggedInFirstToday-in-0:
           destination: UserLoggedInFirstToday.events
 
 feign:

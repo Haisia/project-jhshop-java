@@ -4,10 +4,6 @@ include 'eureka-service'
 include 'gateway-service'
 include 'auth-service'
 
-include 'infrastructure'
-include 'infrastructure:saga'
-include 'infrastructure:outbox'
-
 include 'common'
 include 'common:common-application'
 include 'common:common-domain'

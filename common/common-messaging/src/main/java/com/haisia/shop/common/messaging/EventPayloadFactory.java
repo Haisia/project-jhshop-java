@@ -2,32 +2,33 @@ package com.haisia.shop.common.messaging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haisia.shop.common.domain.event.payload.EventPayload;
-import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
 public class EventPayloadFactory {
 
   private final ObjectMapper objectMapper;
-  private static final String KAFKA_TOPIC_NAME_KEY = "kafka-receivedTopic";
+  private final Map<String, Class<? extends EventPayload>> payloadTypeMap;
 
-  public EventPayload from(Message<?> message) {
-    String topicName = (String) message.getHeaders().get(KAFKA_TOPIC_NAME_KEY);
+  private static final String KAFKA_TOPIC_NAME_KEY = "kafka_receivedTopic";
+
+  public EventPayload from(Message<String> message) {
     try {
-      return (EventPayload) objectMapper.readValue((String) message.getPayload(), getPayloadClassByKafkaTopicName(topicName));
-    } catch(Exception e) {
+      Class<? extends EventPayload> clazz = extractType(message);
+      if (clazz == null) throw new IllegalArgumentException("알맞는 EventPayload 타입을 찾을 수 없습니다.");
+      return objectMapper.readValue(message.getPayload(), clazz);
+    } catch (Exception e) {
       return null;
     }
   }
 
-  private Class<?> getPayloadClassByKafkaTopicName(String topicName) {
-    if (topicName.equals("UserLoggedInFirstToday.event")) {
-      return UserLoggedInFirstTodayEventPayload.class;
-    }
-    return null;
+  private Class<? extends EventPayload> extractType(Message<?> message) {
+    String typeKey = (String) message.getHeaders().get(KAFKA_TOPIC_NAME_KEY);
+    return payloadTypeMap.get(typeKey);
   }
-
 }

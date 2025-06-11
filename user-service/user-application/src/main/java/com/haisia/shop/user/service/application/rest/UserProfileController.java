@@ -4,7 +4,7 @@ import com.haisia.shop.common.application.annotation.InternalOnly;
 import com.haisia.shop.common.application.dto.ResponseData;
 import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileCommand;
 import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileResponse;
-import com.haisia.shop.user.service.domain.ports.input.UserApplicationService;
+import com.haisia.shop.user.service.domain.ports.input.UserProfileApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user/profile")
 public class UserProfileController {
 
-  private final UserApplicationService userApplicationService;
+  private final UserProfileApplicationService userProfileApplicationService;
 
   @InternalOnly
   @PostMapping
   public ResponseEntity<ResponseData<CreateUserProfileResponse>> createUserProfile(
     @RequestBody CreateUserProfileCommand command
     ) {
-    CreateUserProfileResponse response = userApplicationService.createUserProfile(command);
+    CreateUserProfileResponse response = userProfileApplicationService.createUserProfile(command);
     log.info("UserProfile 을 생성하였습니다. userProfileId: {}", response.userProfileId());
     ResponseData<CreateUserProfileResponse> data = ResponseData.success(response);
     return ResponseEntity.ok(data);

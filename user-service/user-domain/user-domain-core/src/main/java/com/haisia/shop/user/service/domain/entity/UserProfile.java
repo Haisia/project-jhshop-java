@@ -6,8 +6,12 @@ import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import com.haisia.shop.common.domain.valueobject.id.UserProfileId;
+import com.haisia.shop.user.service.domain.valueobject.Ledger;
+import com.haisia.shop.user.service.domain.valueobject.LedgerReason;
 import lombok.Builder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class UserProfile extends AggregateRoot<UserProfileId> {
@@ -16,6 +20,8 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
   private Address address;
   private PhoneNumber phoneNumber;
   private Money balance;
+
+  private final List<Ledger> ledgers = new ArrayList<>();
 
   public void initialize() {
     setId(new UserProfileId(UUID.randomUUID()));
@@ -41,6 +47,10 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     return balance;
   }
 
+  public List<Ledger> getLedgers() {
+    return ledgers;
+  }
+
   public void changeAddress(Address address) {
     this.address = address;
   }
@@ -49,12 +59,14 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     this.phoneNumber = phoneNumber;
   }
 
-  public void increaseBalance(Money money) {
-    this.balance = balance.add(money);
+  public void increaseBalance(Money change, LedgerReason reason) {
+    ledgers.add(Ledger.increase(balance, change, reason));
+    this.balance = balance.add(change);
   }
 
-  public void decreaseBalance(Money money) {
-    this.balance = balance.subtract(money);
+  public void decreaseBalance(Money change, LedgerReason reason) {
+    ledgers.add(Ledger.decrease(balance, change, reason));
+    this.balance = balance.subtract(change);
   }
 
   @Builder
@@ -64,7 +76,8 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     String email,
     Address address,
     PhoneNumber phoneNumber,
-    Money balance
+    Money balance,
+    List<Ledger> ledgers
   ) {
     super.setId(userProfileId);
     this.userAuthId = userAuthId;
@@ -72,6 +85,9 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     this.address = address;
     this.phoneNumber = phoneNumber;
     this.balance = balance == null ? Money.ZERO : balance;
+    if (ledgers != null) {
+      this.ledgers.addAll(ledgers);
+    }
   }
 
   public void validate() {

@@ -22,7 +22,7 @@ public class UserLoggedInFirstTodayEventPayload extends EventPayload {
     @JsonProperty("userAuthId") UUID userAuthId,
     @JsonProperty("loggedInTime") LocalDateTime loggedInTime
   ) {
-    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME);
+    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null);
     this.userAuthId = userAuthId;
     this.loggedInTime = loggedInTime;
   }

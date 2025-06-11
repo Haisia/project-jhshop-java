@@ -2,10 +2,12 @@ package com.haisia.shop.user.service.dataaccess.userprofile.entity;
 
 import com.haisia.shop.common.dataaccess.jpa.entity.BaseJpaEntity;
 import com.haisia.shop.common.dataaccess.jpa.valueobject.AddressJpaVo;
+import com.haisia.shop.user.service.dataaccess.userprofile.valueobject.LedgerJpaVo;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -28,6 +30,11 @@ public class UserProfileJpaEntity extends BaseJpaEntity {
   private AddressJpaVo address;
   private String phoneNumber;
   private BigDecimal balance;
+
+  @OrderBy("processedAt DESC")
+  @ElementCollection
+  @CollectionTable(name = "ledger", joinColumns = @JoinColumn(name = "id"))
+  private List<LedgerJpaVo> ledgers;
 
   @Override
   public boolean equals(Object o) {

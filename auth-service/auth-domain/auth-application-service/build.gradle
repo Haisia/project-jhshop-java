@@ -5,8 +5,6 @@ plugins {
 }
 
 dependencies {
-  api project(":infrastructure:saga")
-  api project(":infrastructure:outbox")
   api project(":common:common-domain")
   api project(":common:common-application")
   api project(':auth-service:auth-domain:auth-domain-core')
