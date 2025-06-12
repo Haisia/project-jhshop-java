@@ -3,27 +3,41 @@ package com.haisia.shop.user.service.domain.entity;
 import com.haisia.shop.common.domain.entity.BaseEntity;
 import com.haisia.shop.common.domain.exception.DomainException;
 import com.haisia.shop.common.domain.valueobject.Money;
-import com.haisia.shop.common.domain.valueobject.id.UserProfileId;
 import com.haisia.shop.user.service.domain.valueobject.LedgerReason;
 import com.haisia.shop.user.service.domain.valueobject.Mark;
-import com.haisia.shop.user.service.domain.valueobject.id.LedgerId;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
 @Getter
-public class Ledger extends BaseEntity<LedgerId> {
-  private UserProfileId userProfileId;
-  private final Mark mark;
-  private final Money change;
-  private final Money before;
-  private final Money current;
-  private final LedgerReason reason;
-  private final Instant processedAt;
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "ledger")
+@Entity
+public class Ledger extends BaseEntity<Long> {
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  private Long id;
 
-  void initialize(UserProfileId userProfileId, LedgerId ledgerId) {
-    this.userProfileId = userProfileId;
-    super.setId(ledgerId);
+  @JoinColumn(name = "user_profile_id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  private UserProfile userProfile;
+
+  private Mark mark;
+  @AttributeOverride(name = "amount", column = @Column(name = "change", nullable = false))
+  private Money change;
+  @AttributeOverride(name = "amount", column = @Column(name = "before", nullable = false))
+  private Money before;
+  @AttributeOverride(name = "amount", column = @Column(name = "current", nullable = false))
+  private Money current;
+  private LedgerReason reason;
+  private Instant processedAt;
+
+  void initialize(UserProfile userProfile) {
+    this.userProfile = userProfile;
   }
 
   @Builder

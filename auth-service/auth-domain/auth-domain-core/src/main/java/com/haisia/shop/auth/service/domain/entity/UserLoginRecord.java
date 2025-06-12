@@ -82,7 +82,6 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
     isFirstLoginOfDay = firstLoginOfDay;
   }
 
-  @Override
   public void setId(UserLoginRecordId userLoginRecordId) {
     this.id = userLoginRecordId;
   }

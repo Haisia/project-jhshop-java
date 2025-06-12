@@ -1,8 +1,12 @@
 package com.haisia.shop.common.domain.valueobject;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+@Embeddable
 public record Money(
   BigDecimal amount
 ) {

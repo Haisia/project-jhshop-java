@@ -79,7 +79,6 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
     }
   }
 
-  @Override
   public void setId(UserAuthId userAuthId) {
     this.id = userAuthId;
   }

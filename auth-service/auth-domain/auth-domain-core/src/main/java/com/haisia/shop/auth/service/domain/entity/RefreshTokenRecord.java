@@ -75,7 +75,6 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
     this.available = available;
   }
 
-  @Override
   public void setId(RefreshTokenRecordId refreshTokenRecordId) {
     this.id = refreshTokenRecordId;
   }

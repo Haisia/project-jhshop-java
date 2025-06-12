@@ -1,8 +1,8 @@
 package com.haisia.shop.common.domain.valueobject;
 
-import lombok.Builder;
+import jakarta.persistence.Embeddable;
 
-@Builder
+@Embeddable
 public record Address (
   String country,
   String city,

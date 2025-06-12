@@ -7,19 +7,44 @@ import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import com.haisia.shop.common.domain.valueobject.id.UserProfileId;
 import com.haisia.shop.user.service.domain.valueobject.LedgerReason;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "user_profile")
+@Entity
 public class UserProfile extends AggregateRoot<UserProfileId> {
-  private final UserAuthId userAuthId;
-  private final String email;
+
+  @AttributeOverride(
+    name = "value",
+    column = @Column(name = "id", columnDefinition = "uuid", nullable = false)
+  )
+  @EmbeddedId
+  private UserProfileId id;
+  @AttributeOverride(
+    name = "value",
+    column = @Column(name = "user_auth_id", columnDefinition = "uuid", nullable = false)
+  )
+  @Embedded
+  private UserAuthId userAuthId;
+  private String email;
+  @Embedded
   private Address address;
+  @Embedded
   private PhoneNumber phoneNumber;
+  @Embedded
   private Money balance;
 
+  @OrderBy("processedAt DESC")
+  @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private final List<Ledger> ledgers = new ArrayList<>();
 
   public void initialize() {
@@ -78,7 +103,7 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     Money balance,
     List<Ledger> ledgers
   ) {
-    super.setId(userProfileId);
+    this.id = userProfileId;
     this.userAuthId = userAuthId;
     this.email = email;
     this.address = address;
@@ -90,5 +115,9 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
   }
 
   public void validate() {
+  }
+
+  public void setId(UserProfileId userProfileId) {
+    this.id = userProfileId;
   }
 }

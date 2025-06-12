@@ -1,6 +1,5 @@
 package com.haisia.shop.common.domain.entity;
 
-import com.haisia.shop.common.domain.valueobject.id.BaseId;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -15,8 +14,6 @@ import java.time.Instant;
 public abstract class BaseEntity<ID> {
 
   public abstract ID getId();
-
-  public abstract void setId(ID id);
 
   @CreatedDate
   @Column(updatable = false)

@@ -20,11 +20,8 @@ public class UserProfileApplicationServiceImpl implements UserProfileApplication
 
   private final UserProfileCreateCommandHandler userProfileCreateCommandHandler;
 
-
   @Override
   public CreateUserProfileResponse createUserProfile(CreateUserProfileCommand command) {
     return userProfileCreateCommandHandler.createUserProfile(command);
   }
-
-
 }
