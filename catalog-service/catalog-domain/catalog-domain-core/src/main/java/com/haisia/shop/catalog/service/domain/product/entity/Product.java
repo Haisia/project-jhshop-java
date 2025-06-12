@@ -3,6 +3,7 @@ package com.haisia.shop.catalog.service.domain.product.entity;
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
+import com.haisia.shop.common.domain.valueobject.id.SellerId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import com.haisia.shop.catalog.service.domain.product.valueobject.ProductInformation;
 import jakarta.persistence.*;
@@ -35,7 +36,7 @@ public class Product extends AggregateRoot<ProductId> {
     column = @Column(name = "seller_id", columnDefinition = "uuid", nullable = false)
   )
   @Embedded
-  private UserAuthId sellerId;
+  private SellerId sellerId;
 
   @Override
   public ProductId getId() {
