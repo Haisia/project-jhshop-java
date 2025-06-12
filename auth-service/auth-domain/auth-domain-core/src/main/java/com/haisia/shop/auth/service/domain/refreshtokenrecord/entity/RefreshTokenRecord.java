@@ -38,8 +38,20 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
   @Column(nullable = false)
   private boolean available;
 
-  public void initialize() {
-    setId(new RefreshTokenRecordId(UUID.randomUUID()));
+  // ---
+
+  @Override
+  protected void initialize() {
+    this.id = new RefreshTokenRecordId(UUID.randomUUID());
+  }
+
+  @Builder
+  private RefreshTokenRecord(RefreshTokenRecordId id, String token, UserAuthId userAuthId, int refreshCount, boolean available) {
+    this.id = id;
+    this.token = token;
+    this.userAuthId = userAuthId;
+    this.refreshCount = refreshCount;
+    this.available = available;
   }
 
   public String getToken() {
@@ -66,19 +78,6 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
     refreshCount++;
   }
 
-  @Builder
-  private RefreshTokenRecord(RefreshTokenRecordId id, String token, UserAuthId userAuthId, int refreshCount, boolean available) {
-    this.id = id;
-    this.token = token;
-    this.userAuthId = userAuthId;
-    this.refreshCount = refreshCount;
-    this.available = available;
-  }
-
-  public void setId(RefreshTokenRecordId refreshTokenRecordId) {
-    this.id = refreshTokenRecordId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
@@ -90,4 +89,7 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
   public int hashCode() {
     return Objects.hashCode(id);
   }
+
+  // ---
+
 }

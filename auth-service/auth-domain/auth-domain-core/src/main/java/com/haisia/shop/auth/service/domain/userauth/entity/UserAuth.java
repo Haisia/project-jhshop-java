@@ -32,8 +32,11 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
   @Column(nullable = false)
   private String hashedPassword;
 
-  public void initialize() {
-    setId(new UserAuthId(UUID.randomUUID()));
+  // ---
+
+  @Override
+  protected void initialize() {
+    this.id = new UserAuthId(UUID.randomUUID());
   }
 
   public String getEmail() {
@@ -44,10 +47,6 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
     return hashedPassword;
   }
 
-  public void changePassword(String newHashedPassword) {
-    this.hashedPassword = newHashedPassword;
-  }
-
   @Builder
   private UserAuth(UserAuthId userAuthId, String email, String hashedPassword) {
     this.id = userAuthId;
@@ -55,37 +54,7 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
     this.hashedPassword = hashedPassword;
   }
 
-  public void validate() {
-    validateEmail();
-  }
-
-  private void validateEmail() {
-    final String EMAIL_REGEX =
-      "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
-
-    final int MIN_EMAIL_LENGTH = 5;
-    final int MAX_EMAIL_LENGTH = 254;
-
-    if (email == null || email.trim().isEmpty()) {
-      throw new UserAuthDomainException("email 은 null 이거나 비어있을 수 없습니다.");
-    }
-
-    if (email.length() < MIN_EMAIL_LENGTH || email.length() > MAX_EMAIL_LENGTH) {
-      throw new UserAuthDomainException(
-        String.format("email 은 %d 이상, %d 이하여야 합니다.",
-          MIN_EMAIL_LENGTH, MAX_EMAIL_LENGTH));
-    }
-
-    Matcher matcher = EMAIL_PATTERN.matcher(email);
-    if (!matcher.matches()) {
-      throw new UserAuthDomainException("잘못된 email 형식입니다.");
-    }
-  }
-
-  public void setId(UserAuthId userAuthId) {
-    this.id = userAuthId;
-  }
+  // ---
 
   @Override
   public boolean equals(Object o) {
@@ -97,5 +66,9 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
+  }
+
+  public void changePassword(String newHashedPassword) {
+    this.hashedPassword = newHashedPassword;
   }
 }

@@ -47,8 +47,11 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
   @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private final List<Ledger> ledgers = new ArrayList<>();
 
-  public void initialize() {
-    setId(new UserProfileId(UUID.randomUUID()));
+  // ---
+
+  @Override
+  protected void initialize() {
+    this.id = new UserProfileId(UUID.randomUUID());
   }
 
   public UserAuthId getUserAuthId() {
@@ -75,24 +78,6 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     return ledgers;
   }
 
-  public void changeAddress(Address address) {
-    this.address = address;
-  }
-
-  public void changePhoneNumber(PhoneNumber phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-  public void increaseBalance(Money change, LedgerReason reason) {
-    ledgers.add(Ledger.increase(this, balance, change, reason));
-    this.balance = balance.add(change);
-  }
-
-  public void decreaseBalance(Money change, LedgerReason reason) {
-    ledgers.add(Ledger.decrease(this, balance, change, reason));
-    this.balance = balance.subtract(change);
-  }
-
   @Builder
   private UserProfile(
     UserProfileId userProfileId,
@@ -114,10 +99,23 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     }
   }
 
-  public void validate() {
+  // ---
+
+  public void changeAddress(Address address) {
+    this.address = address;
   }
 
-  public void setId(UserProfileId userProfileId) {
-    this.id = userProfileId;
+  public void changePhoneNumber(PhoneNumber phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public void increaseBalance(Money change, LedgerReason reason) {
+    ledgers.add(Ledger.increase(this, balance, change, reason));
+    this.balance = balance.add(change);
+  }
+
+  public void decreaseBalance(Money change, LedgerReason reason) {
+    ledgers.add(Ledger.decrease(this, balance, change, reason));
+    this.balance = balance.subtract(change);
   }
 }

@@ -2,6 +2,7 @@ package com.haisia.shop.user.service.domain;
 
 import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.user.service.domain.entity.UserProfile;
+import com.haisia.shop.user.service.domain.entity.UserProfileInitializer;
 import com.haisia.shop.user.service.domain.event.UserProfileCreatedEvent;
 import com.haisia.shop.user.service.domain.exception.UserProfileDomainException;
 import com.haisia.shop.user.service.domain.valueobject.LedgerReason;
@@ -19,9 +20,9 @@ public class UserProfileDomainServiceImpl implements UserProfileDomainService {
 
   @Override
   public UserProfileCreatedEvent validateAndInitiate(UserProfile userProfile) {
-    userProfile.validate();
-    userProfile.initialize();
     log.info("UserProfile 이 초기화 되었습니다. id: {}", userProfile.getId().getValue());
+    UserProfileInitializer initializer = new UserProfileInitializer(userProfile, UserProfileDomainException::new);
+    initializer.validateAndInitialize();
 
     return new UserProfileCreatedEvent(userProfile, ZonedDateTime.now(ZoneId.of(UTC)));
   }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -41,6 +42,8 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
   @Column(nullable = false)
   private boolean isFirstLoginOfDay;
 
+  // ---
+
   @Builder
   private UserLoginRecord(
     UserLoginRecordId id,
@@ -50,7 +53,7 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
     String ipAddress,
     boolean isFirstLoginOfDay
   ) {
-    setId(id);
+    this.id = id;
     this.userAuthId = userAuthId;
     this.email = email;
     this.succeedAt = succeedAt;
@@ -74,18 +77,6 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
     return ipAddress;
   }
 
-  public boolean isFirstLoginOfDay() {
-    return isFirstLoginOfDay;
-  }
-
-  public void setFirstLoginOfDay(boolean firstLoginOfDay) {
-    isFirstLoginOfDay = firstLoginOfDay;
-  }
-
-  public void setId(UserLoginRecordId userLoginRecordId) {
-    this.id = userLoginRecordId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
@@ -96,5 +87,20 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
   @Override
   public int hashCode() {
     return Objects.hashCode(id);
+  }
+
+  // ---
+
+  public boolean isFirstLoginOfDay() {
+    return isFirstLoginOfDay;
+  }
+
+  public void setFirstLoginOfDay(boolean firstLoginOfDay) {
+    isFirstLoginOfDay = firstLoginOfDay;
+  }
+
+  @Override
+  protected void initialize() {
+    this.id = new UserLoginRecordId(UUID.randomUUID());
   }
 }

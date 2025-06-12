@@ -1,6 +1,5 @@
 package com.haisia.shop.catalog.service.domain.seller.entity;
 
-import com.haisia.shop.catalog.service.domain.seller.exception.SellerDomainException;
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.id.SellerId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
@@ -10,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -32,22 +32,28 @@ public class Seller extends AggregateRoot<SellerId> {
   @Embedded
   private UserAuthId userAuthId;
 
+  // ---
+
   @Builder
   private Seller(UserAuthId userAuthId) {
     this.userAuthId = userAuthId;
   }
 
-  public void initialize() {
-    setId(new SellerId(UUID.randomUUID()));
+  protected void initialize() {
+    this.id = new SellerId(UUID.randomUUID());
   }
 
-  public void validate() {
-    if (userAuthId == null || userAuthId.getValue() == null) {
-      throw new SellerDomainException("Seller 의 userAuthId는 필수값입니다.");
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Seller seller = (Seller) o;
+    return Objects.equals(id, seller.id);
   }
 
-  public void setId(SellerId id) {
-    this.id = id;
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
   }
+
+  // ---
 }

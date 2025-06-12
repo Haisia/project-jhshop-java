@@ -1,20 +1,18 @@
 package com.haisia.shop.catalog.service.domain.product.entity;
 
-import com.haisia.shop.catalog.service.domain.product.exception.ProductDomainException;
+import com.haisia.shop.catalog.service.domain.product.valueobject.ProductInformation;
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.Stock;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.SellerId;
-import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
-import com.haisia.shop.catalog.service.domain.product.valueobject.ProductInformation;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -52,6 +50,12 @@ public class Product extends AggregateRoot<ProductId> {
   @Embedded
   private SellerId sellerId;
 
+  // ---
+
+  protected void initialize() {
+    this.id = new ProductId(UUID.randomUUID());
+  }
+
   @Builder
   private Product(
     ProductId id,
@@ -74,44 +78,17 @@ public class Product extends AggregateRoot<ProductId> {
     return this.id;
   }
 
-  public void validate() {
-    if (!validateName()
-      || !validatePrice()
-      || !validateStock()
-      || !validateInformation()
-      || !validateSellerId()
-    ) throw new ProductDomainException("Product 의 검증에 실패하였습니다. " +
-      "name: " + name + ", price: " + price + ", stock: " + stock
-      + ", information: " + information + ", sellerId: " + sellerId);
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Product product = (Product) o;
+    return Objects.equals(id, product.id);
   }
 
-  public void initialize() {
-    this.id = new ProductId(UUID.randomUUID());
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
   }
 
-  private boolean validateName() {
-    return name != null && name.length() > 1;
-  }
-
-  private boolean validatePrice() {
-    return price != null && price.isGreaterThanZero();
-  }
-
-  private boolean validateStock() {
-    return stock != null && stock.isNotNegative();
-  }
-
-  private boolean validateInformation() {
-    return information != null
-      && information.title() != null && information.title().length() > 1
-      && information.content() != null && information.content().length() > 1;
-  }
-
-  private boolean validateSellerId() {
-    return sellerId != null && sellerId.getValue() != null;
-  }
-
-  public void setId(ProductId id) {
-    this.id = id;
-  }
+  // ---
 }
