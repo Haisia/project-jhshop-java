@@ -11,6 +11,7 @@ import com.haisia.shop.auth.service.domain.dto.update.UpdatePasswordCommand;
 import com.haisia.shop.auth.service.domain.dto.validate.ValidateAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.ports.input.service.AuthApplicationService;
 import com.haisia.shop.common.application.UserSessionFactory;
+import com.haisia.shop.common.application.annotation.InjectUserSession;
 import com.haisia.shop.common.application.dto.ResponseData;
 import com.haisia.shop.common.domain.valueobject.UserSession;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
   private final AuthApplicationService authApplicationService;
-  private final UserSessionFactory userSessionFactory;
 
   @PostMapping("/register")
   public ResponseEntity<ResponseData<RegisterUserResponse>> registerUser(@RequestBody RegisterUserCommand command) {
@@ -44,12 +44,10 @@ public class AuthController {
   }
 
   @PatchMapping("/password")
-  public ResponseEntity<ResponseData<Boolean>> updatePassword(@RequestBody UpdatePasswordCommand command) {
-    UserSession userSession = userSessionFactory.getUserSession();
-    if (userSession == null) {
-      throw new AuthApplicationException("로그인이 필요합니다.");
-    }
-
+  public ResponseEntity<ResponseData<Boolean>> updatePassword(
+    @RequestBody UpdatePasswordCommand command,
+    @InjectUserSession UserSession userSession
+  ) {
     authApplicationService.updatePassword(command, userSession);
     return ResponseEntity.ok(ResponseData.success(true));
   }
