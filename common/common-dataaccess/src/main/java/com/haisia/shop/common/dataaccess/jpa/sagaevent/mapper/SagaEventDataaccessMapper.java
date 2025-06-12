@@ -1,7 +1,7 @@
-package com.haisia.shop.user.service.dataaccess.sagaevent.mapper;
+package com.haisia.shop.common.dataaccess.jpa.sagaevent.mapper;
 
 import com.haisia.shop.common.domain.event.payload.EventPayload;
-import com.haisia.shop.user.service.dataaccess.sagaevent.entity.SagaEventJpaEntity;
+import com.haisia.shop.common.dataaccess.jpa.sagaevent.entity.SagaEventJpaEntity;
 import org.springframework.stereotype.Component;
 
 @Component

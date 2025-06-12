@@ -7,4 +7,6 @@ public interface UserProfileDomainService {
 
   UserProfileCreatedEvent validateAndInitiate(UserProfile userProfile);
 
+  void awardPointForFirstLoginToday(UserProfile userProfile);
+
 }

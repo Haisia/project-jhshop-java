@@ -1,6 +1,6 @@
-package com.haisia.shop.user.service.dataaccess.sagaevent.repository;
+package com.haisia.shop.common.dataaccess.jpa.sagaevent.repository;
 
-import com.haisia.shop.user.service.dataaccess.sagaevent.entity.SagaEventJpaEntity;
+import com.haisia.shop.common.dataaccess.jpa.sagaevent.entity.SagaEventJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

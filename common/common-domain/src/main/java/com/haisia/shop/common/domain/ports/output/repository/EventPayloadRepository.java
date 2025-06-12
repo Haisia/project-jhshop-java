@@ -1,4 +1,4 @@
-package com.haisia.shop.user.service.domain.ports.output.repository;
+package com.haisia.shop.common.domain.ports.output.repository;
 
 import com.haisia.shop.common.domain.event.payload.EventPayload;
 

@@ -84,12 +84,12 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
   }
 
   public void increaseBalance(Money change, LedgerReason reason) {
-    ledgers.add(Ledger.increase(balance, change, reason));
+    ledgers.add(Ledger.increase(this, balance, change, reason));
     this.balance = balance.add(change);
   }
 
   public void decreaseBalance(Money change, LedgerReason reason) {
-    ledgers.add(Ledger.decrease(balance, change, reason));
+    ledgers.add(Ledger.decrease(this, balance, change, reason));
     this.balance = balance.subtract(change);
   }
 

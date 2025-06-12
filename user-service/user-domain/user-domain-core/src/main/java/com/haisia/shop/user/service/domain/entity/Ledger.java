@@ -26,6 +26,7 @@ public class Ledger extends BaseEntity<Long> {
   @ManyToOne(fetch = FetchType.LAZY)
   private UserProfile userProfile;
 
+  @Enumerated(EnumType.STRING)
   private Mark mark;
   @AttributeOverride(name = "amount", column = @Column(name = "change", nullable = false))
   private Money change;
@@ -33,19 +34,17 @@ public class Ledger extends BaseEntity<Long> {
   private Money before;
   @AttributeOverride(name = "amount", column = @Column(name = "current", nullable = false))
   private Money current;
+  @Enumerated(EnumType.STRING)
   private LedgerReason reason;
   private Instant processedAt;
 
-  void initialize(UserProfile userProfile) {
-    this.userProfile = userProfile;
-  }
-
   @Builder
-  private Ledger(Mark mark, Money change, Money before, LedgerReason reason, Instant processedAt) {
-    if (mark == null || change == null || before == null || reason == null) {
+  private Ledger(UserProfile userProfile, Mark mark, Money change, Money before, LedgerReason reason, Instant processedAt) {
+    if (userProfile == null || mark == null || change == null || before == null || reason == null) {
       throw new DomainException("생성자 파라미터가 올바르지 않습니다.");
     }
 
+    this.userProfile = userProfile;
     this.mark = mark;
     this.change = change;
     this.before = before;
@@ -63,8 +62,9 @@ public class Ledger extends BaseEntity<Long> {
     }
   }
 
-  public static Ledger increase(Money before, Money change, LedgerReason reason) {
+  protected static Ledger increase(UserProfile userProfile, Money before, Money change, LedgerReason reason) {
     return Ledger.builder()
+      .userProfile(userProfile)
       .mark(Mark.INCREASE)
       .change(change)
       .before(before)
@@ -72,8 +72,9 @@ public class Ledger extends BaseEntity<Long> {
       .build();
   }
 
-  public static Ledger decrease(Money before, Money change, LedgerReason reason) {
+  protected static Ledger decrease(UserProfile userProfile, Money before, Money change, LedgerReason reason) {
     return Ledger.builder()
+      .userProfile(userProfile)
       .mark(Mark.DECREASE)
       .change(change)
       .before(before)

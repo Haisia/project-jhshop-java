@@ -1,10 +1,8 @@
-package com.haisia.shop.user.service.dataaccess.sagaevent.entity;
+package com.haisia.shop.common.dataaccess.jpa.sagaevent.entity;
 
 import com.haisia.shop.common.domain.entity.BaseEntity;
 import com.haisia.shop.common.domain.saga.SagaStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -22,5 +20,6 @@ public class SagaEventJpaEntity extends BaseEntity<UUID> {
   private UUID aggregateId;
   private String aggregateType;
   private String eventName;
+  @Enumerated(EnumType.STRING)
   private SagaStatus status;
 }
