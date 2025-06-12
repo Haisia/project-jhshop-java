@@ -7,10 +7,12 @@ import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenCommand
 import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
+import com.haisia.shop.auth.service.domain.dto.update.UpdatePasswordCommand;
 import com.haisia.shop.auth.service.domain.dto.validate.ValidateAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.event.RefreshTokenGeneratedEvent;
 import com.haisia.shop.auth.service.domain.handler.LoginUserCommandHandler;
 import com.haisia.shop.auth.service.domain.handler.RefreshAccessTokenCommandHandler;
+import com.haisia.shop.auth.service.domain.handler.UpdatePasswordCommandHandler;
 import com.haisia.shop.auth.service.domain.handler.UserAuthCreateCommandHandler;
 import com.haisia.shop.auth.service.domain.ports.input.service.AuthApplicationService;
 import com.haisia.shop.common.domain.ports.output.repository.UserSessionRepository;
@@ -29,6 +31,7 @@ public class AuthApplicationServiceImpl implements AuthApplicationService {
   private final UserAuthCreateCommandHandler userAuthCreateCommandHandler;
   private final LoginUserCommandHandler loginUserCommandHandler;
   private final RefreshAccessTokenCommandHandler refreshAccessTokenCommandHandler;
+  private final UpdatePasswordCommandHandler updatePasswordCommandHandler;
 
   private final JwtTokenProvider accessTokenProvider;
 
@@ -40,6 +43,11 @@ public class AuthApplicationServiceImpl implements AuthApplicationService {
   @Override
   public LoginUserResponse loginUser(LoginUserCommand command) {
     return loginUserCommandHandler.loginUser(command);
+  }
+
+  @Override
+  public void updatePassword(UpdatePasswordCommand command, UserSession userSession) {
+    updatePasswordCommandHandler.updatePassword(command, userSession);
   }
 
   @Override

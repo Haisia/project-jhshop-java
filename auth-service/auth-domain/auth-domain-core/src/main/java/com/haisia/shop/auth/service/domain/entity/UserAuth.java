@@ -44,6 +44,10 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
     return hashedPassword;
   }
 
+  public void changePassword(String newHashedPassword) {
+    this.hashedPassword = newHashedPassword;
+  }
+
   @Builder
   private UserAuth(UserAuthId userAuthId, String email, String hashedPassword) {
     this.id = userAuthId;

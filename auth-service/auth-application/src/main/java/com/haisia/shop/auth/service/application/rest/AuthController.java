@@ -1,11 +1,13 @@
 package com.haisia.shop.auth.service.application.rest;
 
+import com.haisia.shop.auth.service.application.exception.AuthApplicationException;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserCommand;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserResponse;
 import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenCommand;
 import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
+import com.haisia.shop.auth.service.domain.dto.update.UpdatePasswordCommand;
 import com.haisia.shop.auth.service.domain.dto.validate.ValidateAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.ports.input.service.AuthApplicationService;
 import com.haisia.shop.common.application.UserSessionFactory;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
   private final AuthApplicationService authApplicationService;
+  private final UserSessionFactory userSessionFactory;
 
   @PostMapping("/register")
   public ResponseEntity<ResponseData<RegisterUserResponse>> registerUser(@RequestBody RegisterUserCommand command) {
@@ -38,6 +41,17 @@ public class AuthController {
     log.info("로그인에 성공하였습니다. refreshToken: {}", response.refreshToken());
     ResponseData<LoginUserResponse> data = ResponseData.success(response);
     return ResponseEntity.ok(data);
+  }
+
+  @PatchMapping("/password")
+  public ResponseEntity<ResponseData<Boolean>> updatePassword(@RequestBody UpdatePasswordCommand command) {
+    UserSession userSession = userSessionFactory.getUserSession();
+    if (userSession == null) {
+      throw new AuthApplicationException("로그인이 필요합니다.");
+    }
+
+    authApplicationService.updatePassword(command, userSession);
+    return ResponseEntity.ok(ResponseData.success(true));
   }
 
   @PostMapping("/token/refresh")
