@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.domain.entity;
+package com.haisia.shop.auth.service.domain.refreshtokenrecord.entity;
 
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.id.RefreshTokenRecordId;

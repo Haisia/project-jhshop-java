@@ -1,12 +1,12 @@
 package com.haisia.shop.auth.service.domain.handler.helper;
 
-import com.haisia.shop.auth.service.domain.UserAuthDomainService;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
-import com.haisia.shop.auth.service.domain.entity.UserAuth;
-import com.haisia.shop.auth.service.domain.event.UserAuthCreatedEvent;
-import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.auth.service.domain.mapper.UserAuthDataMapper;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserAuthRepository;
+import com.haisia.shop.auth.service.domain.userauth.UserAuthDomainService;
+import com.haisia.shop.auth.service.domain.userauth.entity.UserAuth;
+import com.haisia.shop.auth.service.domain.userauth.event.UserAuthCreatedEvent;
+import com.haisia.shop.auth.service.domain.userauth.exception.UserAuthDomainException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

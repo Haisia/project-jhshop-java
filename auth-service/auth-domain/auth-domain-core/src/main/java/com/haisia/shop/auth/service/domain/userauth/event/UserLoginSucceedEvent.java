@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.domain.event;
+package com.haisia.shop.auth.service.domain.userauth.event;
 
 import com.haisia.shop.common.domain.event.DomainEvent;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;

@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.domain.event;
+package com.haisia.shop.auth.service.domain.refreshtokenrecord.event;
 
 import com.haisia.shop.common.domain.event.DomainEvent;
 import lombok.Builder;

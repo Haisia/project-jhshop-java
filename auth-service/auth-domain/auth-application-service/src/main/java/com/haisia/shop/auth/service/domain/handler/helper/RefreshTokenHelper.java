@@ -1,9 +1,9 @@
 package com.haisia.shop.auth.service.domain.handler.helper;
 
-import com.haisia.shop.auth.service.domain.RefreshTokenRecordDomainService;
-import com.haisia.shop.auth.service.domain.entity.RefreshTokenRecord;
-import com.haisia.shop.auth.service.domain.exception.RefreshTokenRecordDomainException;
 import com.haisia.shop.auth.service.domain.ports.output.repository.RefreshTokenRecordRepository;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.RefreshTokenRecordDomainService;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.entity.RefreshTokenRecord;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.exception.RefreshTokenRecordDomainException;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

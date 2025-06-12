@@ -1,9 +1,9 @@
 package com.haisia.shop.auth.service.domain.handler.helper;
 
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
-import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.auth.service.domain.mapper.UserServiceFeignMapper;
 import com.haisia.shop.auth.service.domain.ports.output.client.feign.UserServiceClient;
+import com.haisia.shop.auth.service.domain.userauth.exception.UserAuthDomainException;
 import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

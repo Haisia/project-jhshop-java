@@ -1,9 +1,9 @@
 package com.haisia.shop.auth.service.domain.handler.event;
 
-import com.haisia.shop.auth.service.domain.entity.UserLoginRecord;
-import com.haisia.shop.auth.service.domain.event.UserLoginSucceedEvent;
 import com.haisia.shop.auth.service.domain.ports.output.repository.OutboxMessageRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
+import com.haisia.shop.auth.service.domain.userloginrecord.entity.UserLoginRecord;
+import com.haisia.shop.auth.service.domain.userloginrecord.event.UserLoginSucceedEvent;
 import com.haisia.shop.common.domain.outbox.OutboxMessage;
 import com.haisia.shop.common.domain.outbox.OutboxMessageFactory;
 import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;

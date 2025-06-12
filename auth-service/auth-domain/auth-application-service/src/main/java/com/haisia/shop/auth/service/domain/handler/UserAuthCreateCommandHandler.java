@@ -2,10 +2,10 @@ package com.haisia.shop.auth.service.domain.handler;
 
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
-import com.haisia.shop.auth.service.domain.event.UserAuthCreatedEvent;
 import com.haisia.shop.auth.service.domain.handler.helper.UserAuthCreateHelper;
 import com.haisia.shop.auth.service.domain.handler.helper.UserProfileHelper;
 import com.haisia.shop.auth.service.domain.mapper.UserAuthDataMapper;
+import com.haisia.shop.auth.service.domain.userauth.event.UserAuthCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

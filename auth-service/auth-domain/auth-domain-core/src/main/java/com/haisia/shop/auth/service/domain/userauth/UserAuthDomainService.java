@@ -1,7 +1,7 @@
-package com.haisia.shop.auth.service.domain;
+package com.haisia.shop.auth.service.domain.userauth;
 
-import com.haisia.shop.auth.service.domain.entity.UserAuth;
-import com.haisia.shop.auth.service.domain.event.UserAuthCreatedEvent;
+import com.haisia.shop.auth.service.domain.userauth.entity.UserAuth;
+import com.haisia.shop.auth.service.domain.userauth.event.UserAuthCreatedEvent;
 import com.haisia.shop.common.domain.valueobject.Address;
 import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 

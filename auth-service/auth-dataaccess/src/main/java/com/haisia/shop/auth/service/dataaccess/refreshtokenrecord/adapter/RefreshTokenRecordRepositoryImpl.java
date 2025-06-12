@@ -1,8 +1,8 @@
 package com.haisia.shop.auth.service.dataaccess.refreshtokenrecord.adapter;
 
 import com.haisia.shop.auth.service.dataaccess.refreshtokenrecord.repository.RefreshTokenRecordJpaRepository;
-import com.haisia.shop.auth.service.domain.entity.RefreshTokenRecord;
 import com.haisia.shop.auth.service.domain.ports.output.repository.RefreshTokenRecordRepository;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.entity.RefreshTokenRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

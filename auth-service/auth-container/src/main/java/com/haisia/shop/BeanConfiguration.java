@@ -1,9 +1,9 @@
 package com.haisia.shop;
 
-import com.haisia.shop.auth.service.domain.RefreshTokenRecordDomainService;
-import com.haisia.shop.auth.service.domain.RefreshTokenRecordDomainServiceImpl;
-import com.haisia.shop.auth.service.domain.UserAuthDomainService;
-import com.haisia.shop.auth.service.domain.UserAuthDomainServiceImpl;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.RefreshTokenRecordDomainService;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.RefreshTokenRecordDomainServiceImpl;
+import com.haisia.shop.auth.service.domain.userauth.UserAuthDomainService;
+import com.haisia.shop.auth.service.domain.userauth.UserAuthDomainServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,7 +1,7 @@
 package com.haisia.shop.auth.service.domain.handler.event;
 
 import com.haisia.shop.auth.service.domain.config.JwtTokenProvider;
-import com.haisia.shop.auth.service.domain.event.RefreshTokenGeneratedEvent;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.event.RefreshTokenGeneratedEvent;
 import com.haisia.shop.common.domain.ports.output.repository.UserSessionRepository;
 import com.haisia.shop.common.domain.valueobject.UserSession;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;

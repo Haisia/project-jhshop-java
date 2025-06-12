@@ -1,6 +1,6 @@
-package com.haisia.shop.auth.service.domain;
+package com.haisia.shop.auth.service.domain.refreshtokenrecord;
 
-import com.haisia.shop.auth.service.domain.entity.RefreshTokenRecord;
+import com.haisia.shop.auth.service.domain.refreshtokenrecord.entity.RefreshTokenRecord;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

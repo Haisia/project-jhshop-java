@@ -1,6 +1,6 @@
-package com.haisia.shop.auth.service.domain.entity;
+package com.haisia.shop.auth.service.domain.userauth.entity;
 
-import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
+import com.haisia.shop.auth.service.domain.userauth.exception.UserAuthDomainException;
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import jakarta.persistence.*;

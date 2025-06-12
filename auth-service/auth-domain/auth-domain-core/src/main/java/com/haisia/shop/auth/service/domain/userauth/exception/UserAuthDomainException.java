@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.domain.exception;
+package com.haisia.shop.auth.service.domain.userauth.exception;
 
 import com.haisia.shop.common.domain.exception.DomainException;
 

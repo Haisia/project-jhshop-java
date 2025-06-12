@@ -1,9 +1,9 @@
 package com.haisia.shop.auth.service.domain.handler;
 
 import com.haisia.shop.auth.service.domain.dto.update.UpdatePasswordCommand;
-import com.haisia.shop.auth.service.domain.entity.UserAuth;
-import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserAuthRepository;
+import com.haisia.shop.auth.service.domain.userauth.entity.UserAuth;
+import com.haisia.shop.auth.service.domain.userauth.exception.UserAuthDomainException;
 import com.haisia.shop.common.domain.valueobject.UserSession;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.RequiredArgsConstructor;

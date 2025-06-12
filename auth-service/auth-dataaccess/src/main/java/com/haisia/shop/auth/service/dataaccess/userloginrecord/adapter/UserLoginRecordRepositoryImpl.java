@@ -1,8 +1,8 @@
 package com.haisia.shop.auth.service.dataaccess.userloginrecord.adapter;
 
 import com.haisia.shop.auth.service.dataaccess.userloginrecord.repository.UserLoginRecordJpaRepository;
-import com.haisia.shop.auth.service.domain.entity.UserLoginRecord;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
+import com.haisia.shop.auth.service.domain.userloginrecord.entity.UserLoginRecord;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

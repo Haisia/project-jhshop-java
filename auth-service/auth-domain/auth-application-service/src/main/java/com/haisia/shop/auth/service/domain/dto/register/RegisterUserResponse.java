@@ -1,6 +1,6 @@
 package com.haisia.shop.auth.service.domain.dto.register;
 
-import com.haisia.shop.auth.service.domain.entity.UserAuth;
+import com.haisia.shop.auth.service.domain.userauth.entity.UserAuth;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
