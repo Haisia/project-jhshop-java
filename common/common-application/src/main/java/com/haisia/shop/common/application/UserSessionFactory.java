@@ -22,6 +22,7 @@ public class UserSessionFactory {
       ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
     String userAuthId = request.getHeader(CustomHttpHeaderConstants.USER_AUTH_ID);
+    if (userAuthId == null) return null;
 
     return repository.findById(userAuthId).orElse(null);
   }

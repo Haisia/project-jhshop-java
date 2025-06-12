@@ -64,14 +64,7 @@ public class CustomAuthFilter implements GlobalFilter {
         }
         return chain.filter(exchange.mutate().request(requestAfterDefense).build());
       })
-      .onErrorResume(
-        Throwable.class,
-        e -> {
-          e.printStackTrace();
-          System.out.println();
-          return chain.filter(exchange.mutate().request(requestAfterDefense).build());
-        }
-      );
+      .onErrorResume(Throwable.class, e -> chain.filter(exchange.mutate().request(requestAfterDefense).build()));
   }
 
   @Getter
