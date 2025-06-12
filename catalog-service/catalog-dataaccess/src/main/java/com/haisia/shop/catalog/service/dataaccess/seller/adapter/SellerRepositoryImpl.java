@@ -1,6 +1,6 @@
-package com.haisia.shop.catalog.service.dataaccess.adapter;
+package com.haisia.shop.catalog.service.dataaccess.seller.adapter;
 
-import com.haisia.shop.catalog.service.dataaccess.repository.SellerJpaRepository;
+import com.haisia.shop.catalog.service.dataaccess.seller.repository.SellerJpaRepository;
 import com.haisia.shop.catalog.service.domain.ports.output.repository.SellerRepository;
 import com.haisia.shop.catalog.service.domain.seller.entity.Seller;
 import com.haisia.shop.common.domain.valueobject.id.SellerId;

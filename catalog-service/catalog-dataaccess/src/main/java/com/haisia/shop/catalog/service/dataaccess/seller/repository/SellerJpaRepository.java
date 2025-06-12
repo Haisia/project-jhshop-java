@@ -1,4 +1,4 @@
-package com.haisia.shop.catalog.service.dataaccess.repository;
+package com.haisia.shop.catalog.service.dataaccess.seller.repository;
 
 import com.haisia.shop.catalog.service.domain.seller.entity.Seller;
 import com.haisia.shop.common.domain.valueobject.id.SellerId;
