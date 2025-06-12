@@ -12,7 +12,14 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     restart: on-failure
-
+  redis:
+    image: 'redis:7.4.3'
+    container_name: jhshop-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./.data/redis:/data
+    command: redis-server --appendonly yes --requirepass "123123"
   broker:
     image: confluentinc/cp-server:7.9.1
     platform: ${PLATFORM:-linux/amd64}

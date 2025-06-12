@@ -6,8 +6,11 @@ import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenCommand
 import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
+import com.haisia.shop.auth.service.domain.dto.validate.ValidateAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.ports.input.service.AuthApplicationService;
+import com.haisia.shop.common.application.UserSessionFactory;
 import com.haisia.shop.common.application.dto.ResponseData;
+import com.haisia.shop.common.domain.valueobject.UserSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +40,21 @@ public class AuthController {
     return ResponseEntity.ok(data);
   }
 
-  @PostMapping("/refresh")
+  @PostMapping("/token/refresh")
   public ResponseEntity<ResponseData<RefreshAccessTokenResponse>> refreshAccessToken(
     @RequestBody RefreshAccessTokenCommand command
   ) {
     RefreshAccessTokenResponse response = authApplicationService.refreshAccessToken(command);
     log.info("AccessToken 발급에 성공하였습니다. accessToken: {}", response.accessToken());
     ResponseData<RefreshAccessTokenResponse> data = ResponseData.success(response);
+    return ResponseEntity.ok(data);
+  }
+
+  @PostMapping("/token/validate")
+  public ResponseEntity<?> validateAccessToken(@RequestHeader("Authorization") String token) {
+    String accessToken = token.split(" ")[1];
+    ValidateAccessTokenResponse response = authApplicationService.validateAccessToken(accessToken);
+    ResponseData<ValidateAccessTokenResponse> data = ResponseData.success(response);
     return ResponseEntity.ok(data);
   }
 

@@ -4,6 +4,7 @@ import com.haisia.shop.auth.service.domain.config.JwtTokenProvider;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserCommand;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserResponse;
 import com.haisia.shop.auth.service.domain.entity.UserAuth;
+import com.haisia.shop.auth.service.domain.event.RefreshTokenGeneratedEvent;
 import com.haisia.shop.auth.service.domain.event.UserLoginSucceedEvent;
 import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.auth.service.domain.handler.helper.RefreshTokenHelper;
@@ -13,11 +14,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
-import static com.haisia.shop.common.domain.DomainConstants.UTC;
 
 @RequiredArgsConstructor
 @Component
@@ -50,14 +46,25 @@ public class LoginUserCommandHandler {
 
     refreshTokenHelper.initiateAndPersist(refreshToken, foundUserAuth.getId());
 
-    eventPublisher.publishEvent(
-      UserLoginSucceedEvent.builder()
-        .userAuthId(foundUserAuth.getId())
-        .email(command.email())
-        .ipAddress(TEMP_IP_ADDRESS)
-        .createdAt(ZonedDateTime.now(ZoneId.of(UTC)))
-        .build());
+    publishLoginSucceedEvent(command, foundUserAuth);
+    publishRefreshTokenGeneratedEvent(refreshToken);
 
     return new LoginUserResponse(refreshToken, accessToken);
+  }
+
+  private void publishLoginSucceedEvent(LoginUserCommand command, UserAuth foundUserAuth) {
+    UserLoginSucceedEvent loginSucceedEvent = UserLoginSucceedEvent.builder()
+      .userAuthId(foundUserAuth.getId())
+      .email(command.email())
+      .ipAddress(TEMP_IP_ADDRESS)
+      .build();
+    eventPublisher.publishEvent(loginSucceedEvent);
+  }
+
+  private void publishRefreshTokenGeneratedEvent(String refreshToken) {
+    RefreshTokenGeneratedEvent refreshTokenGeneratedEvent = RefreshTokenGeneratedEvent.builder()
+      .refreshToken(refreshToken)
+      .build();
+    eventPublisher.publishEvent(refreshTokenGeneratedEvent);
   }
 }

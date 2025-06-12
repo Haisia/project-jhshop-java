@@ -22,11 +22,13 @@ public class CustomAuthFilter implements GlobalFilter {
 
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    final String CUSTOM_HTTP_HEADER_USER_AUTH_ID = "X-UserAuth-Id";
+
     ServerHttpRequest request = exchange.getRequest();
 
     ServerHttpRequest.Builder mutatedRequestBuilder = request.mutate();
-    if (request.getHeaders().containsKey("X-User-Id")) {
-      mutatedRequestBuilder.headers(httpHeaders -> httpHeaders.remove("X-User-Id"));
+    if (request.getHeaders().containsKey(CUSTOM_HTTP_HEADER_USER_AUTH_ID)) {
+      mutatedRequestBuilder.headers(httpHeaders -> httpHeaders.remove(CUSTOM_HTTP_HEADER_USER_AUTH_ID));
     }
     ServerHttpRequest requestAfterDefense = mutatedRequestBuilder.build();
 
@@ -42,7 +44,7 @@ public class CustomAuthFilter implements GlobalFilter {
     String authorizationHeader = authorizationHeaders.getFirst();
 
     return authWebClient.post()
-      .uri("lb://AUTH-SERVICE/auth/v1/token/validate")
+      .uri("lb://AUTH-SERVICE/auth/token/validate")
       .header(HttpHeaders.AUTHORIZATION, authorizationHeader)
       .retrieve()
       .onStatus(HttpStatusCode::isError, clientResponse ->
@@ -53,20 +55,32 @@ public class CustomAuthFilter implements GlobalFilter {
         if (responseData != null) {
           ResponseValidateToken validationResult = responseData;
 
-          if (validationResult.getUserId() != null) {
+          if (validationResult.getData() != null) {
             ServerHttpRequest finalMutatedRequest = requestAfterDefense.mutate()
-              .header("X-User-Id", String.valueOf(validationResult.getUserId()))
+              .header(CUSTOM_HTTP_HEADER_USER_AUTH_ID, String.valueOf(validationResult.getData().getUserAuthId()))
               .build();
             return chain.filter(exchange.mutate().request(finalMutatedRequest).build());
           }
         }
         return chain.filter(exchange.mutate().request(requestAfterDefense).build());
       })
-      .onErrorResume(Throwable.class, e -> chain.filter(exchange.mutate().request(requestAfterDefense).build()));
+      .onErrorResume(
+        Throwable.class,
+        e -> {
+          e.printStackTrace();
+          System.out.println();
+          return chain.filter(exchange.mutate().request(requestAfterDefense).build());
+        }
+      );
   }
 
   @Getter
   private static class ResponseValidateToken {
-    private UUID userId;
+    private Data data;
+
+    @Getter
+    private static class Data {
+      private UUID userAuthId;
+    }
   }
 }

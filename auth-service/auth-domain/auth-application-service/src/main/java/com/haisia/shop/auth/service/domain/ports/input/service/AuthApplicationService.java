@@ -6,6 +6,7 @@ import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenCommand
 import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
 import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
+import com.haisia.shop.auth.service.domain.dto.validate.ValidateAccessTokenResponse;
 
 public interface AuthApplicationService {
   RegisterUserResponse registerUser(RegisterUserCommand command);
@@ -13,4 +14,6 @@ public interface AuthApplicationService {
   LoginUserResponse loginUser(LoginUserCommand command);
 
   RefreshAccessTokenResponse refreshAccessToken(RefreshAccessTokenCommand command);
+
+  ValidateAccessTokenResponse validateAccessToken(String accessToken);
 }

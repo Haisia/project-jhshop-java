@@ -4,7 +4,10 @@ import com.haisia.shop.common.domain.event.DomainEvent;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.Builder;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+
+import static com.haisia.shop.common.domain.DomainConstants.UTC;
 
 public class UserLoginSucceedEvent extends DomainEvent {
   private final UserAuthId userAuthId;
@@ -15,10 +18,9 @@ public class UserLoginSucceedEvent extends DomainEvent {
   private UserLoginSucceedEvent(
     UserAuthId userAuthId,
     String email,
-    String ipAddress,
-    ZonedDateTime createdAt
+    String ipAddress
     ) {
-    super(createdAt);
+    super(ZonedDateTime.now(ZoneId.of(UTC)));
     this.userAuthId = userAuthId;
     this.email = email;
     this.ipAddress = ipAddress;
