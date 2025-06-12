@@ -1,6 +1,6 @@
 package com.haisia.shop.user.service.dataaccess.userprofile.entity;
 
-import com.haisia.shop.common.dataaccess.jpa.entity.BaseJpaEntity;
+import com.haisia.shop.common.domain.entity.BaseJpaEntity;
 import com.haisia.shop.common.dataaccess.jpa.valueobject.AddressJpaVo;
 import jakarta.persistence.*;
 import lombok.*;

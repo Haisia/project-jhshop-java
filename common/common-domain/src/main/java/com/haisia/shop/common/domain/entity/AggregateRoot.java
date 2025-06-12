@@ -1,4 +1,6 @@
 package com.haisia.shop.common.domain.entity;
 
-public abstract class AggregateRoot<ID> extends BaseEntity<ID>{
+import com.haisia.shop.common.domain.valueobject.id.BaseId;
+
+public abstract class AggregateRoot<ID extends BaseId<?>> extends BaseEntity<ID> {
 }

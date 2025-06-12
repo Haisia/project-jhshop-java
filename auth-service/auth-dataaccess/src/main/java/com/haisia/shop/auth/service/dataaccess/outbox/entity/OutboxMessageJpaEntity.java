@@ -1,7 +1,7 @@
 package com.haisia.shop.auth.service.dataaccess.outbox.entity;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.haisia.shop.common.dataaccess.jpa.entity.BaseJpaEntity;
+import com.haisia.shop.common.domain.entity.BaseEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "outbox_message")
 @Entity
-public class OutboxMessageJpaEntity extends BaseJpaEntity {
+public class OutboxMessageJpaEntity extends BaseEntity<Long> {
 
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
@@ -37,5 +37,4 @@ public class OutboxMessageJpaEntity extends BaseJpaEntity {
   @Type(JsonType.class)
   @Column(columnDefinition = "json")
   private JsonNode payload;
-
 }

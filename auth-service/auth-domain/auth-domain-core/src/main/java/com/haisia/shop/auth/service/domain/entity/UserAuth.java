@@ -3,15 +3,34 @@ package com.haisia.shop.auth.service.domain.entity;
 import com.haisia.shop.auth.service.domain.exception.UserAuthDomainException;
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "user_auth")
+@Entity
 public class UserAuth extends AggregateRoot<UserAuthId> {
-  private final String email;
-  private final String hashedPassword;
+
+  @AttributeOverride(
+    name = "value",
+    column = @Column(name = "id", columnDefinition = "uuid", nullable = false)
+  )
+  @EmbeddedId
+  private UserAuthId id;
+  @Column(unique = true, nullable = false)
+  private String email;
+  @Column(nullable = false)
+  private String hashedPassword;
 
   public void initialize() {
     setId(new UserAuthId(UUID.randomUUID()));
@@ -27,7 +46,7 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
 
   @Builder
   private UserAuth(UserAuthId userAuthId, String email, String hashedPassword) {
-    super.setId(userAuthId);
+    this.id = userAuthId;
     this.email = email;
     this.hashedPassword = hashedPassword;
   }
@@ -58,5 +77,22 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
     if (!matcher.matches()) {
       throw new UserAuthDomainException("잘못된 email 형식입니다.");
     }
+  }
+
+  @Override
+  public void setId(UserAuthId userAuthId) {
+    this.id = userAuthId;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    UserAuth userAuth = (UserAuth) o;
+    return Objects.equals(id, userAuth.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
   }
 }

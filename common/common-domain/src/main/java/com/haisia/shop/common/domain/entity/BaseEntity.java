@@ -1,27 +1,46 @@
 package com.haisia.shop.common.domain.entity;
 
-import java.util.Objects;
+import com.haisia.shop.common.domain.valueobject.id.BaseId;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.Instant;
+
+@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass
 public abstract class BaseEntity<ID> {
-  private ID id;
 
-  public ID getId() {
-    return id;
+  public abstract ID getId();
+
+  public abstract void setId(ID id);
+
+  @CreatedDate
+  @Column(updatable = false)
+  protected Instant createdAt;
+  protected String createdBy;
+
+  @LastModifiedDate
+  protected Instant updatedAt;
+  protected String updatedBy;
+
+  public Instant getCreatedAt() {
+    return createdAt;
   }
 
-  public void setId(ID id) {
-    this.id = id;
+  public String getCreatedBy() {
+    return createdBy;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) return false;
-    BaseEntity<?> that = (BaseEntity<?>) o;
-    return Objects.equals(id, that.id);
+  public Instant getUpdatedAt() {
+    return updatedAt;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(id);
+  public String getUpdatedBy() {
+    return updatedBy;
   }
+
 }

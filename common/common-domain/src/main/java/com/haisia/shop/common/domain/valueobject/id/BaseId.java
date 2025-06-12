@@ -1,9 +1,10 @@
 package com.haisia.shop.common.domain.valueobject.id;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class BaseId<T> {
-  private final T value;
+public abstract class BaseId<T> implements Serializable {
+  private T value;
 
   protected BaseId(T value) {
     this.value = value;
@@ -23,5 +24,8 @@ public abstract class BaseId<T> {
   @Override
   public int hashCode() {
     return Objects.hashCode(value);
+  }
+
+  protected BaseId() {
   }
 }

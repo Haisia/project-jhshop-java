@@ -1,14 +1,13 @@
 package com.haisia.shop.auth.service.dataaccess.userauth.repository;
 
-import com.haisia.shop.auth.service.dataaccess.userauth.entity.UserAuthJpaEntity;
+import com.haisia.shop.auth.service.domain.entity.UserAuth;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserAuthJpaRepository extends JpaRepository<UserAuthJpaEntity, UUID> {
-  Optional<UserAuthJpaEntity> findByEmail(String email);
+public interface UserAuthJpaRepository extends JpaRepository<UserAuth, UUID> {
+  Optional<UserAuth> findByEmail(String email);
 }

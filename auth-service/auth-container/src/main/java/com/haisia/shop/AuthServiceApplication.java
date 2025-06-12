@@ -9,18 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableFeignClients(basePackages = "com.haisia.shop")
 @EnableJpaAuditing
-@EnableJpaRepositories(
-  basePackages = {
-    "com.haisia.shop.auth.service.dataaccess",
-    "com.haisia.shop.common.dataaccess"
-  }
-)
-@EntityScan(
-  basePackages = {
-    "com.haisia.shop.auth.service.dataaccess",
-    "com.haisia.shop.common.dataaccess"
-  }
-)
+@EnableJpaRepositories(basePackages = {"com.haisia.shop"})
+@EntityScan(basePackages = {"com.haisia.shop"})
 @SpringBootApplication(scanBasePackages = "com.haisia.shop")
 public class AuthServiceApplication {
   public static void main(String[] args) {

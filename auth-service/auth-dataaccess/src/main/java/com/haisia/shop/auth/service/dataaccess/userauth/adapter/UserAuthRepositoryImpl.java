@@ -1,7 +1,5 @@
 package com.haisia.shop.auth.service.dataaccess.userauth.adapter;
 
-import com.haisia.shop.auth.service.dataaccess.userauth.entity.UserAuthJpaEntity;
-import com.haisia.shop.auth.service.dataaccess.userauth.mapper.UserAuthDataaccessMapper;
 import com.haisia.shop.auth.service.dataaccess.userauth.repository.UserAuthJpaRepository;
 import com.haisia.shop.auth.service.domain.entity.UserAuth;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserAuthRepository;
@@ -15,16 +13,14 @@ import java.util.Optional;
 public class UserAuthRepositoryImpl implements UserAuthRepository {
 
   private final UserAuthJpaRepository repository;
-  private final UserAuthDataaccessMapper mapper;
 
   @Override
   public UserAuth save(UserAuth userAuth) {
-    UserAuthJpaEntity savedJpaEntity = repository.save(mapper.userAuthToJpaEntity(userAuth));
-    return mapper.jpaEntityToUserAuth(savedJpaEntity);
+    return repository.save(userAuth);
   }
 
   @Override
   public Optional<UserAuth> findByEmail(String email) {
-    return repository.findByEmail(email).map(mapper::jpaEntityToUserAuth);
+    return repository.findByEmail(email);
   }
 }
