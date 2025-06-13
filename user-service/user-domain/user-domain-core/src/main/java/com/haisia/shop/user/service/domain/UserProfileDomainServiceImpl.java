@@ -20,9 +20,9 @@ public class UserProfileDomainServiceImpl implements UserProfileDomainService {
 
   @Override
   public UserProfileCreatedEvent validateAndInitiate(UserProfile userProfile) {
-    log.info("UserProfile 이 초기화 되었습니다. id: {}", userProfile.getId().getValue());
     UserProfileInitializer initializer = new UserProfileInitializer(userProfile, UserProfileDomainException::new);
     initializer.validateAndInitialize();
+    log.info("UserProfile 이 초기화 되었습니다. id: {}", userProfile.getId().getValue());
 
     return new UserProfileCreatedEvent(userProfile, ZonedDateTime.now(ZoneId.of(UTC)));
   }

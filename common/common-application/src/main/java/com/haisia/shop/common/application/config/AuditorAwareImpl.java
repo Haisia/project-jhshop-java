@@ -16,7 +16,12 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 
   @Override
   public Optional<String> getCurrentAuditor() {
-    UserSession userSession = userSessionFactory.getUserSession();
+    UserSession userSession = null;
+    try {
+      userSession = userSessionFactory.getUserSession();
+    } catch(Exception e) {
+      return Optional.of("SYSTEM");
+    }
 
     if (userSession != null && userSession.userAuthId() != null) {
       return Optional.of(userSession.userAuthId());

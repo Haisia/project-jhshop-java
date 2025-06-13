@@ -6,8 +6,9 @@ import com.haisia.shop.catalog.service.domain.seller.exception.SellerDomainExcep
 
 public class SellerDomainServiceImpl implements SellerDomainService {
   @Override
-  public void validateAndInitiate(Seller seller) {
+  public Object validateAndInitiate(Seller seller) {
     SellerInitializer sellerInitializer = new SellerInitializer(seller, SellerDomainException::new);
     sellerInitializer.validateAndInitialize();
+    return null;
   }
 }

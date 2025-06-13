@@ -20,7 +20,7 @@ public class RefreshTokenHelper {
       .userAuthId(userAuthId)
       .refreshCount(0)
       .build();
-    refreshTokenRecordDomainService.initiate(createdRefreshTokenRecord);
+    refreshTokenRecordDomainService.validateAndInitiate(createdRefreshTokenRecord);
 
     RefreshTokenRecord savedRefreshTokenRecord = refreshTokenRecordRepository.save(createdRefreshTokenRecord);
     if (savedRefreshTokenRecord == null) {
