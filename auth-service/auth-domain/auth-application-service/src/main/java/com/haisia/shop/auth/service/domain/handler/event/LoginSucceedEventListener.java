@@ -5,10 +5,9 @@ import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginReco
 import com.haisia.shop.auth.service.domain.userloginrecord.UserLoginRecordDomainService;
 import com.haisia.shop.auth.service.domain.userloginrecord.entity.UserLoginRecord;
 import com.haisia.shop.auth.service.domain.userloginrecord.event.UserLoginSucceedEvent;
+import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;
 import com.haisia.shop.common.domain.outbox.OutboxMessage;
 import com.haisia.shop.common.domain.outbox.OutboxMessageFactory;
-import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;
-import com.haisia.shop.common.domain.valueobject.id.UserLoginRecordId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

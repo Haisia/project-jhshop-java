@@ -72,11 +72,6 @@ public class Product extends AggregateRoot<ProductId> {
   }
 
   @Override
-  public ProductId getId() {
-    return this.id;
-  }
-
-  @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
     Product product = (Product) o;

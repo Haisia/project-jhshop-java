@@ -2,7 +2,9 @@ package com.haisia.shop.order.service.domain.entity;
 
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.Address;
+import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.id.OrderId;
+import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import com.haisia.shop.order.service.domain.veluobject.OrderStatus;
 import com.haisia.shop.order.service.domain.veluobject.TrackingId;
@@ -12,9 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,7 +30,14 @@ public class Order extends AggregateRoot<OrderId> {
 
   @OrderBy("id DESC")
   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-  private List<OrderItem> orderItems = new ArrayList<>();
+  private final List<OrderItem> orderItems = new ArrayList<>();
+
+  @AttributeOverride(
+    name = "amount",
+    column = @Column(name = "price", nullable = false)
+  )
+  @Embedded
+  private Money price;
 
   @AttributeOverride(
     name = "value",
@@ -60,13 +67,15 @@ public class Order extends AggregateRoot<OrderId> {
   @Builder
   private Order(
     List<OrderItem> orderItems,
+    Money price,
     UserAuthId buyer,
     UserAuthId seller,
     Address deliveryAddress,
     TrackingId trackingId,
     OrderStatus orderStatus
   ) {
-    this.orderItems = orderItems;
+    this.price = price;
+    this.orderItems.addAll(orderItems);
     this.buyer = buyer;
     this.seller = seller;
     this.deliveryAddress = deliveryAddress;
@@ -80,33 +89,53 @@ public class Order extends AggregateRoot<OrderId> {
   }
 
   @Override
-  public OrderId getId() {
-    return id;
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    Order order = (Order) o;
+    return Objects.equals(id, order.id);
   }
 
-  public List<OrderItem> getOrderItems() {
-    return orderItems;
-  }
-
-  public UserAuthId getBuyer() {
-    return buyer;
-  }
-
-  public UserAuthId getSeller() {
-    return seller;
-  }
-
-  public Address getDeliveryAddress() {
-    return deliveryAddress;
-  }
-
-  public TrackingId getTrackingId() {
-    return trackingId;
-  }
-
-  public OrderStatus getOrderStatus() {
-    return orderStatus;
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
   }
 
   // ---
+
+  public OrderItem addItem(
+    ProductId productId,
+    int quantity,
+    Money price,
+    Money subTotal
+  ) {
+    Optional<OrderItem> findItem = this.orderItems.stream()
+      .filter(item -> item.getProductId().equals(productId))
+      .findFirst();
+
+    if (findItem.isPresent()) {
+      return mergeOrderItem(findItem.get(), quantity, subTotal);
+    }
+
+    OrderItem createdOrderItem = OrderItem.builder()
+      .order(this)
+      .productId(productId)
+      .quantity(quantity)
+      .price(price)
+      .subTotal(subTotal)
+      .build();
+    this.orderItems.add(createdOrderItem);
+
+    return createdOrderItem;
+  }
+
+  private OrderItem mergeOrderItem(
+    OrderItem orderItem,
+    int quantity,
+    Money subTotal
+  ) {
+    orderItem.addQuantity(quantity);
+    orderItem.addSubTotal(subTotal);
+    return orderItem;
+  }
+
 }

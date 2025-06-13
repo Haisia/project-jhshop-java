@@ -54,30 +54,6 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     this.id = new UserProfileId(UUID.randomUUID());
   }
 
-  public UserAuthId getUserAuthId() {
-    return userAuthId;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public Address getAddress() {
-    return address;
-  }
-
-  public PhoneNumber getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public Money getBalance() {
-    return balance;
-  }
-
-  public List<Ledger> getLedgers() {
-    return ledgers;
-  }
-
   @Builder
   private UserProfile(
     UserAuthId userAuthId,

@@ -35,21 +35,11 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
     this.id = new UserAuthId(UUID.randomUUID());
   }
 
-  public String getEmail() {
-    return email;
-  }
-
-  public String getHashedPassword() {
-    return hashedPassword;
-  }
-
   @Builder
   private UserAuth(String email, String hashedPassword) {
     this.email = email;
     this.hashedPassword = hashedPassword;
   }
-
-  // ---
 
   @Override
   public boolean equals(Object o) {
@@ -62,6 +52,8 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
   public int hashCode() {
     return Objects.hashCode(id);
   }
+
+  // ---
 
   public void changePassword(String newHashedPassword) {
     this.hashedPassword = newHashedPassword;

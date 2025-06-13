@@ -58,20 +58,9 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
     this.isFirstLoginOfDay = isFirstLoginOfDay;
   }
 
-  public UserAuthId getUserAuthId() {
-    return userAuthId;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public Instant getSucceedAt() {
-    return succeedAt;
-  }
-
-  public String getIpAddress() {
-    return ipAddress;
+  @Override
+  protected void initialize() {
+    this.id = new UserLoginRecordId(UUID.randomUUID());
   }
 
   @Override
@@ -88,16 +77,7 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
 
   // ---
 
-  public boolean isFirstLoginOfDay() {
-    return isFirstLoginOfDay;
-  }
-
   public void setFirstLoginOfDay(boolean firstLoginOfDay) {
     isFirstLoginOfDay = firstLoginOfDay;
-  }
-
-  @Override
-  protected void initialize() {
-    this.id = new UserLoginRecordId(UUID.randomUUID());
   }
 }

@@ -52,30 +52,6 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
     this.available = available;
   }
 
-  public String getToken() {
-    return token;
-  }
-
-  public UserAuthId getUserAuthId() {
-    return userAuthId;
-  }
-
-  public int getRefreshCount() {
-    return refreshCount;
-  }
-
-  public boolean isAvailable() {
-    return available;
-  }
-
-  public void setAvailable(boolean available) {
-    this.available = available;
-  }
-
-  public void addRefreshCount() {
-    refreshCount++;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
@@ -89,5 +65,13 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
   }
 
   // ---
+
+  public void setAvailable(boolean available) {
+    this.available = available;
+  }
+
+  public void addRefreshCount() {
+    refreshCount++;
+  }
 
 }
