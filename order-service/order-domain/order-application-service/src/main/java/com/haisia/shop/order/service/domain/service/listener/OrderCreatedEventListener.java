@@ -41,8 +41,8 @@ public class OrderCreatedEventListener {
       .aggregateId(event.getOrder().getId().getValue())
       .orderItems(event.getOrder().getOrderItems().stream().map(this::toPayload).collect(Collectors.toList()))
       .price(event.getOrder().getPrice().amount())
-      .buyerId(event.getOrder().getBuyer().getValue())
-      .sellerId(event.getOrder().getSeller().getValue())
+      .buyerUserAuthId(event.getOrder().getBuyer().getValue())
+      .sellerUserAuthId(event.getOrder().getSeller().getValue())
       .build();
   }
 

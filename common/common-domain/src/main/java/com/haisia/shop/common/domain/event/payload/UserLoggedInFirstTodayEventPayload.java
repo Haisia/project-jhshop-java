@@ -17,10 +17,10 @@ public class UserLoggedInFirstTodayEventPayload extends EventPayload {
   @JsonCreator
   @Builder
   protected UserLoggedInFirstTodayEventPayload(
-    @JsonProperty("sagaId") UUID sagaId,
-    @JsonProperty("aggregateId") UUID aggregateId,
-    @JsonProperty("userAuthId") UUID userAuthId,
-    @JsonProperty("loggedInTime") LocalDateTime loggedInTime
+    UUID sagaId,
+    UUID aggregateId,
+    UUID userAuthId,
+    LocalDateTime loggedInTime
   ) {
     super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null);
     this.userAuthId = userAuthId;

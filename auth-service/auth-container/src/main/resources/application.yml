@@ -39,7 +39,8 @@ jwt:
     expiration-ms: 604800000
   access-token:
     key: ${JWT_ACCESS_TOKEN_KEY}
-    expiration-ms: 300000
+#    expiration-ms: 300000
+    expiration-ms: 604800000
 
 feign:
   secret:

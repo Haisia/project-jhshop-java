@@ -7,7 +7,7 @@ plugins {
 dependencies {
   implementation project(":catalog-service:catalog-application")
   implementation project(":catalog-service:catalog-dataaccess")
-//  implementation project(":catalog-service:catalog-messaging")
+  implementation project(":catalog-service:catalog-messaging")
   implementation project(":catalog-service:catalog-domain:catalog-application-service")
   implementation project(":catalog-service:catalog-domain:catalog-domain-core")
 

@@ -1,8 +1,6 @@
 package com.haisia.shop.common.domain.event.payload;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.haisia.shop.common.domain.valueobject.Address;
-import com.haisia.shop.common.domain.valueobject.id.OrderId;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,8 +12,8 @@ import java.util.UUID;
 public class OrderCreatedEventPayload extends EventPayload {
   private final List<OrderItem> orderItems;
   private final BigDecimal price;
-  private final UUID buyerId;
-  private final UUID sellerId;
+  private final UUID buyerUserAuthId;
+  private final UUID sellerUserAuthId;
 
   @Builder
   public record OrderItem(
@@ -36,13 +34,13 @@ public class OrderCreatedEventPayload extends EventPayload {
     UUID aggregateId,
     List<OrderItem> orderItems,
     BigDecimal price,
-    UUID buyerId,
-    UUID sellerId
+    UUID buyerUserAuthId,
+    UUID sellerUserAuthId
   ) {
     super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null);
     this.orderItems = orderItems;
     this.price = price;
-    this.buyerId = buyerId;
-    this.sellerId = sellerId;
+    this.buyerUserAuthId = buyerUserAuthId;
+    this.sellerUserAuthId = sellerUserAuthId;
   }
 }

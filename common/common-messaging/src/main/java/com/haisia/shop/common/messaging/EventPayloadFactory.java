@@ -23,7 +23,7 @@ public class EventPayloadFactory {
       if (clazz == null) throw new IllegalArgumentException("알맞는 EventPayload 타입을 찾을 수 없습니다.");
       return objectMapper.readValue(message.getPayload(), clazz);
     } catch (Exception e) {
-      return null;
+      throw new RuntimeException(e);
     }
   }
 
