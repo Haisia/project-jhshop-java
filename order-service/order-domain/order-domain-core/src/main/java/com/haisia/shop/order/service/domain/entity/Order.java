@@ -6,8 +6,8 @@ import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.id.OrderId;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
-import com.haisia.shop.order.service.domain.veluobject.OrderStatus;
-import com.haisia.shop.order.service.domain.veluobject.TrackingId;
+import com.haisia.shop.order.service.domain.valuobject.OrderStatus;
+import com.haisia.shop.order.service.domain.valuobject.TrackingId;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -86,6 +86,8 @@ public class Order extends AggregateRoot<OrderId> {
   @Override
   protected void initialize() {
     this.id = new OrderId(UUID.randomUUID());
+    this.trackingId = new TrackingId(UUID.randomUUID());
+    this.orderStatus = OrderStatus.PENDING;
   }
 
   @Override

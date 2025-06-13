@@ -3,7 +3,6 @@ package com.haisia.shop.order.service.domain.entity;
 import com.haisia.shop.common.domain.AggregateRootInitializer;
 import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.order.service.domain.exception.OrderDomainException;
-import com.haisia.shop.order.service.domain.veluobject.OrderStatus;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
     validateSeller(errors);
     validateAddress(errors);
     validateTrackingId(errors);
-    validateOrderStatus(errors);
   }
 
   @Override
@@ -89,17 +87,5 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
 
   private void validateTrackingId(Map<String, String> errors) {
     super.validateBaseId(errors, target.getTrackingId(), "trackingId");
-  }
-
-  private void validateOrderStatus(Map<String, String> errors) {
-    if (target.getOrderStatus() == null) {
-      errors.put("orderStatus", NULL);
-      return;
-    }
-
-    if (target.getOrderStatus() != OrderStatus.PENDING) {
-      String message = String.format("기대값과 다릅니다. expect: %s, result: %s", OrderStatus.PENDING, target.getOrderStatus());
-      errors.put("orderStatus", message);
-    }
   }
 }
