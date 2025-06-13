@@ -29,7 +29,7 @@ public class Order extends AggregateRoot<OrderId> {
   private OrderId id;
 
   @OrderBy("id DESC")
-  @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<OrderItem> orderItems = new ArrayList<>();
 
   @AttributeOverride(
@@ -75,7 +75,7 @@ public class Order extends AggregateRoot<OrderId> {
     OrderStatus orderStatus
   ) {
     this.price = price;
-    this.orderItems.addAll(orderItems);
+    this.orderItems.addAll(orderItems == null ? Collections.emptyList() : orderItems);
     this.buyer = buyer;
     this.seller = seller;
     this.deliveryAddress = deliveryAddress;

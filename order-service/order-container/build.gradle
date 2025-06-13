@@ -1,0 +1,19 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot' version "${springBootVersion}"
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+}
+
+dependencies {
+  implementation project(":order-service:order-application")
+  implementation project(":order-service:order-dataaccess")
+  implementation project(":order-service:order-domain:order-application-service")
+  implementation project(":order-service:order-domain:order-domain-core")
+
+  implementation "org.springframework.boot:spring-boot-starter"
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+}
+
+bootBuildImage {
+  imageName = "${project.group}/order.service:${project.version}"
+}

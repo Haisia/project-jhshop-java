@@ -1,0 +1,12 @@
+plugins {
+  id 'java-library'
+  id 'org.springframework.boot' version "${springBootVersion}"
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+}
+
+dependencies {
+  api project(":common:common-dataaccess")
+  implementation project(":order-service:order-domain:order-application-service")
+
+  implementation "io.hypersistence:hypersistence-utils-hibernate-63:$hypersistenceUtilsHibernateVersion"
+}

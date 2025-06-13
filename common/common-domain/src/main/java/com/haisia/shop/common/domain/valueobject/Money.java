@@ -33,22 +33,19 @@ public record Money(
   }
 
   public Money add(Money money) {
-    return new Money(setScale(this.amount.add(money.getAmount())));
+    return new Money(this.amount.add(money.getAmount()));
   }
 
   public Money subtract(Money money) {
-    return new Money(setScale(this.amount.subtract(money.getAmount())));
+    return new Money(this.amount.subtract(money.getAmount()));
   }
 
   public Money multiply(int multiplier) {
-    return new Money(setScale(this.amount.multiply(new BigDecimal(multiplier))));
+    return new Money(this.amount.multiply(new BigDecimal(multiplier)));
   }
 
   public BigDecimal getAmount() {
     return amount;
   }
 
-  private BigDecimal setScale(BigDecimal input) {
-    return input.setScale(2, RoundingMode.HALF_EVEN);
-  }
 }

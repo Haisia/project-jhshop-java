@@ -20,7 +20,6 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
     validateBuyer(errors);
     validateSeller(errors);
     validateAddress(errors);
-    validateTrackingId(errors);
   }
 
   @Override
@@ -83,9 +82,5 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
 
   private void validateAddress(Map<String, String> errors) {
     super.validateAddress(errors, target.getDeliveryAddress(), "deliveryAddress");
-  }
-
-  private void validateTrackingId(Map<String, String> errors) {
-    super.validateBaseId(errors, target.getTrackingId(), "trackingId");
   }
 }
