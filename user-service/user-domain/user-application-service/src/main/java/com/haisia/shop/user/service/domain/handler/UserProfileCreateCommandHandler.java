@@ -1,7 +1,7 @@
 package com.haisia.shop.user.service.domain.handler;
 
-import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileCommand;
-import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileResponse;
+import com.haisia.shop.user.service.domain.dto.create.CreateUserProfileCommand;
+import com.haisia.shop.user.service.domain.dto.create.CreateUserProfileResponse;
 import com.haisia.shop.user.service.domain.event.UserProfileCreatedEvent;
 import com.haisia.shop.user.service.domain.handler.helper.UserProfileCreateHelper;
 import lombok.RequiredArgsConstructor;

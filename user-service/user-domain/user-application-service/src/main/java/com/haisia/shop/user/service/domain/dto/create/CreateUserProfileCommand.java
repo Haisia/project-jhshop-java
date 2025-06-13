@@ -1,14 +1,16 @@
-package com.haisia.shop.auth.service.domain.dto.register;
+package com.haisia.shop.user.service.domain.dto.create;
 
 import com.haisia.shop.common.domain.valueobject.Address;
 import com.haisia.shop.common.domain.valueobject.PhoneNumber;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
+import java.util.UUID;
+
 @Builder
-public record RegisterUserCommand(
+public record CreateUserProfileCommand(
+  @NotNull UUID userAuthId,
   @NotNull String email,
-  @NotNull String password,
   @NotNull Address address,
   @NotNull PhoneNumber phoneNumber
 ) {

@@ -9,6 +9,7 @@ dependencies {
   implementation project(":auth-service:auth-dataaccess")
   implementation project(":auth-service:auth-domain:auth-application-service")
   implementation project(":auth-service:auth-domain:auth-domain-core")
+  implementation project(":auth-service:auth-client")
 
   implementation "org.springframework.boot:spring-boot-starter"
   implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'

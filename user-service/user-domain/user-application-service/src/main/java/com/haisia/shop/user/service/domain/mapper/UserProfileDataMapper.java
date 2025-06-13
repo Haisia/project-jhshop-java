@@ -1,7 +1,7 @@
 package com.haisia.shop.user.service.domain.mapper;
 
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
-import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileCommand;
+import com.haisia.shop.user.service.domain.dto.create.CreateUserProfileCommand;
 import com.haisia.shop.user.service.domain.entity.UserProfile;
 import org.springframework.stereotype.Component;
 

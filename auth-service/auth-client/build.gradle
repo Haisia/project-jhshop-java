@@ -1,0 +1,11 @@
+plugins {
+  id 'java-library'
+  id 'org.springframework.boot' version "${springBootVersion}"
+  id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+}
+
+dependencies {
+  implementation project(":auth-service:auth-domain:auth-application-service")
+
+  api "org.springframework.cloud:spring-cloud-starter-openfeign"
+}

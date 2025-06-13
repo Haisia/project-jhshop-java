@@ -1,16 +1,14 @@
 package com.haisia.shop.auth.service.application.rest;
 
-import com.haisia.shop.auth.service.application.exception.AuthApplicationException;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserCommand;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserResponse;
 import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenCommand;
 import com.haisia.shop.auth.service.domain.dto.refresh.RefreshAccessTokenResponse;
-import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
-import com.haisia.shop.auth.service.domain.dto.register.RegisterUserResponse;
+import com.haisia.shop.auth.service.domain.dto.create.CreateUserAuthCommand;
+import com.haisia.shop.auth.service.domain.dto.create.CreateUserAuthResponse;
 import com.haisia.shop.auth.service.domain.dto.update.UpdatePasswordCommand;
 import com.haisia.shop.auth.service.domain.dto.validate.ValidateAccessTokenResponse;
 import com.haisia.shop.auth.service.domain.ports.input.service.AuthApplicationService;
-import com.haisia.shop.common.application.UserSessionFactory;
 import com.haisia.shop.common.application.annotation.InjectUserSession;
 import com.haisia.shop.common.application.dto.ResponseData;
 import com.haisia.shop.common.domain.valueobject.UserSession;
@@ -28,10 +26,10 @@ public class AuthController {
   private final AuthApplicationService authApplicationService;
 
   @PostMapping("/register")
-  public ResponseEntity<ResponseData<RegisterUserResponse>> registerUser(@RequestBody RegisterUserCommand command) {
-    RegisterUserResponse response = authApplicationService.registerUser(command);
+  public ResponseEntity<ResponseData<CreateUserAuthResponse>> createUserAuth(@RequestBody CreateUserAuthCommand command) {
+    CreateUserAuthResponse response = authApplicationService.createUserAuth(command);
     log.info("회원가입이 완료되었습니다. userAuthId: {}", response.userAuthId());
-    ResponseData<RegisterUserResponse> data = ResponseData.success(response);
+    ResponseData<CreateUserAuthResponse> data = ResponseData.success(response);
     return ResponseEntity.ok(data);
   }
 

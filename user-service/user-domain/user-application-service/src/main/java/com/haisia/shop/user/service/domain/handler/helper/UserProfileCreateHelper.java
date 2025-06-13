@@ -1,7 +1,7 @@
 package com.haisia.shop.user.service.domain.handler.helper;
 
 import com.haisia.shop.user.service.domain.UserProfileDomainService;
-import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileCommand;
+import com.haisia.shop.user.service.domain.dto.create.CreateUserProfileCommand;
 import com.haisia.shop.user.service.domain.entity.UserProfile;
 import com.haisia.shop.user.service.domain.event.UserProfileCreatedEvent;
 import com.haisia.shop.user.service.domain.exception.UserProfileDomainException;

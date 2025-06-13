@@ -1,6 +1,6 @@
 package com.haisia.shop.auth.service.domain.handler.helper;
 
-import com.haisia.shop.auth.service.domain.dto.register.RegisterUserCommand;
+import com.haisia.shop.auth.service.domain.dto.create.CreateUserAuthCommand;
 import com.haisia.shop.auth.service.domain.mapper.UserAuthDataMapper;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserAuthRepository;
 import com.haisia.shop.auth.service.domain.userauth.UserAuthDomainService;
@@ -28,7 +28,7 @@ public class UserAuthCreateHelper {
   * 2. 계정생성
   * */
   @Transactional
-  public UserAuthCreatedEvent hashPasswordAndPersist(RegisterUserCommand command) {
+  public UserAuthCreatedEvent hashPasswordAndPersist(CreateUserAuthCommand command) {
     UserAuth userAuth = mapper.registerUserCommandToUserAuth(command, hashPassword(command.password()));
     UserAuthCreatedEvent event = service.validateAndInitiate(userAuth, command.address(), command.phoneNumber());
 

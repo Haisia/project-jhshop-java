@@ -1,4 +1,4 @@
-package com.haisia.shop.common.domain.dto.userprofile.create;
+package com.haisia.shop.user.service.domain.dto.create;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

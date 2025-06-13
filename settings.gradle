@@ -18,6 +18,7 @@ include 'auth-service:auth-domain'
 include 'auth-service:auth-domain:auth-application-service'
 include 'auth-service:auth-domain:auth-domain-core'
 include 'auth-service:auth-messaging'
+include 'auth-service:auth-client'
 
 include 'user-service'
 include 'user-service:user-application'

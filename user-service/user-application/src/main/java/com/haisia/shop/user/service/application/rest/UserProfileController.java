@@ -2,8 +2,8 @@ package com.haisia.shop.user.service.application.rest;
 
 import com.haisia.shop.common.application.annotation.InternalOnly;
 import com.haisia.shop.common.application.dto.ResponseData;
-import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileCommand;
-import com.haisia.shop.common.domain.dto.userprofile.create.CreateUserProfileResponse;
+import com.haisia.shop.user.service.domain.dto.create.CreateUserProfileCommand;
+import com.haisia.shop.user.service.domain.dto.create.CreateUserProfileResponse;
 import com.haisia.shop.user.service.domain.ports.input.application.UserProfileApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
