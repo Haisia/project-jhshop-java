@@ -1,7 +1,7 @@
 package com.haisia.shop.order.service.domain.ports.output.repository;
 
 import com.haisia.shop.common.domain.valueobject.id.OrderId;
-import com.haisia.shop.order.service.domain.entity.Order;
+import com.haisia.shop.order.service.domain.order.entity.Order;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package com.haisia.shop;
 
-import com.haisia.shop.order.service.domain.OrderDomainService;
-import com.haisia.shop.order.service.domain.OrderDomainServiceImpl;
+import com.haisia.shop.order.service.domain.order.OrderDomainService;
+import com.haisia.shop.order.service.domain.order.OrderDomainServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

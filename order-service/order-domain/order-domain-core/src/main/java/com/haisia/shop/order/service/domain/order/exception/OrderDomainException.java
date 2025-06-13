@@ -1,4 +1,4 @@
-package com.haisia.shop.order.service.domain.exception;
+package com.haisia.shop.order.service.domain.order.exception;
 
 import com.haisia.shop.common.domain.exception.DomainException;
 

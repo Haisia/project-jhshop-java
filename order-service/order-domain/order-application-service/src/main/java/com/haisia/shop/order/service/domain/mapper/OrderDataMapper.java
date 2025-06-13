@@ -5,8 +5,8 @@ import com.haisia.shop.common.domain.valueobject.UserSession;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import com.haisia.shop.order.service.domain.dto.create.CreateOrderCommand;
-import com.haisia.shop.order.service.domain.entity.Order;
-import com.haisia.shop.order.service.domain.entity.OrderItem;
+import com.haisia.shop.order.service.domain.order.entity.Order;
+import com.haisia.shop.order.service.domain.order.entity.OrderItem;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

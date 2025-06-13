@@ -1,8 +1,8 @@
-package com.haisia.shop.order.service.domain.entity;
+package com.haisia.shop.order.service.domain.order.entity;
 
 import com.haisia.shop.common.domain.AggregateRootInitializer;
 import com.haisia.shop.common.domain.valueobject.Money;
-import com.haisia.shop.order.service.domain.exception.OrderDomainException;
+import com.haisia.shop.order.service.domain.order.exception.OrderDomainException;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.haisia.shop.order.service.domain.entity;
+package com.haisia.shop.order.service.domain.order.entity;
 
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.Address;
@@ -6,8 +6,8 @@ import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.id.OrderId;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
-import com.haisia.shop.order.service.domain.valuobject.OrderStatus;
-import com.haisia.shop.order.service.domain.valuobject.TrackingId;
+import com.haisia.shop.order.service.domain.order.valuobject.OrderStatus;
+import com.haisia.shop.order.service.domain.order.valuobject.TrackingId;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

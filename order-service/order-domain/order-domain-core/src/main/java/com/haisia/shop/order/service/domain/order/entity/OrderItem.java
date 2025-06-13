@@ -1,4 +1,4 @@
-package com.haisia.shop.order.service.domain.entity;
+package com.haisia.shop.order.service.domain.order.entity;
 
 import com.haisia.shop.common.domain.entity.BaseEntity;
 import com.haisia.shop.common.domain.valueobject.Money;

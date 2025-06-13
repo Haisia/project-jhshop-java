@@ -1,4 +1,4 @@
-package com.haisia.shop.order.service.domain.valuobject;
+package com.haisia.shop.order.service.domain.order.valuobject;
 
 import com.haisia.shop.common.domain.valueobject.id.BaseId;
 import jakarta.persistence.Embeddable;
