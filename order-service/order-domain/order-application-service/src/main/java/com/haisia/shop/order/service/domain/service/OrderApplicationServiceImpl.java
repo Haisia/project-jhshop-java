@@ -5,9 +5,11 @@ import com.haisia.shop.order.service.domain.order.OrderDomainService;
 import com.haisia.shop.order.service.domain.dto.create.CreateOrderCommand;
 import com.haisia.shop.order.service.domain.order.entity.Order;
 import com.haisia.shop.order.service.domain.mapper.OrderDataMapper;
+import com.haisia.shop.order.service.domain.order.event.OrderCreatedEvent;
 import com.haisia.shop.order.service.domain.ports.input.application.OrderApplicationService;
 import com.haisia.shop.order.service.domain.ports.output.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +20,15 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
   private final OrderRepository repository;
   private final OrderDataMapper mapper;
   private final OrderDomainService domainService;
+  private final ApplicationEventPublisher eventPublisher;
 
   @Transactional
   @Override
   public void create(CreateOrderCommand command, UserSession userSession) {
     Order createdOrder = mapper.toOrder(command, userSession);
-    domainService.validateAndInitiate(createdOrder);
+    OrderCreatedEvent orderCreatedEvent = (OrderCreatedEvent) domainService.validateAndInitiate(createdOrder);
     repository.save(createdOrder);
+
+    eventPublisher.publishEvent(orderCreatedEvent);
   }
 }

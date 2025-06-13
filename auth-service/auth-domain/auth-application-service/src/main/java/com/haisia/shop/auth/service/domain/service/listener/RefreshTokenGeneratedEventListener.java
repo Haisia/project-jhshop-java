@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.domain.handler.event;
+package com.haisia.shop.auth.service.domain.service.listener;
 
 import com.haisia.shop.auth.service.domain.config.JwtTokenProvider;
 import com.haisia.shop.auth.service.domain.refreshtokenrecord.event.RefreshTokenGeneratedEvent;

@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.domain.ports.output.repository;
+package com.haisia.shop.common.domain.ports.output.repository;
 
 import com.haisia.shop.common.domain.outbox.OutboxMessage;
 

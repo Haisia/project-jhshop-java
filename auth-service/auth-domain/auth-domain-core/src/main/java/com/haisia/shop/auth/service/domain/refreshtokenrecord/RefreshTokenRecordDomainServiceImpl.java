@@ -3,12 +3,13 @@ package com.haisia.shop.auth.service.domain.refreshtokenrecord;
 import com.haisia.shop.auth.service.domain.refreshtokenrecord.entity.RefreshTokenRecord;
 import com.haisia.shop.auth.service.domain.refreshtokenrecord.entity.RefreshTokenRecordInitializer;
 import com.haisia.shop.auth.service.domain.refreshtokenrecord.exception.RefreshTokenRecordDomainException;
+import com.haisia.shop.common.domain.event.DomainEvent;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class RefreshTokenRecordDomainServiceImpl implements RefreshTokenRecordDomainService {
   @Override
-  public Object validateAndInitiate(RefreshTokenRecord refreshTokenRecord) {
+  public DomainEvent validateAndInitiate(RefreshTokenRecord refreshTokenRecord) {
     RefreshTokenRecordInitializer initializer =
       new RefreshTokenRecordInitializer(refreshTokenRecord, RefreshTokenRecordDomainException::new);
 

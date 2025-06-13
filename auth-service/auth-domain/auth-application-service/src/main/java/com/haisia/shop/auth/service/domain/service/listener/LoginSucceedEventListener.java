@@ -1,6 +1,6 @@
-package com.haisia.shop.auth.service.domain.handler.event;
+package com.haisia.shop.auth.service.domain.service.listener;
 
-import com.haisia.shop.auth.service.domain.ports.output.repository.OutboxMessageRepository;
+import com.haisia.shop.common.domain.ports.output.repository.OutboxMessageRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
 import com.haisia.shop.auth.service.domain.userloginrecord.UserLoginRecordDomainService;
 import com.haisia.shop.auth.service.domain.userloginrecord.entity.UserLoginRecord;

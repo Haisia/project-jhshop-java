@@ -1,8 +1,8 @@
-package com.haisia.shop.auth.service.dataaccess.outbox.mapper;
+package com.haisia.shop.common.dataaccess.jpa.outbox.mapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.haisia.shop.auth.service.dataaccess.outbox.entity.OutboxMessageJpaEntity;
+import com.haisia.shop.common.dataaccess.jpa.outbox.entity.OutboxMessageJpaEntity;
 import com.haisia.shop.common.domain.outbox.OutboxMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.domain;
+package com.haisia.shop.auth.service.domain.service;
 
 import com.haisia.shop.auth.service.domain.config.JwtTokenProvider;
 import com.haisia.shop.auth.service.domain.dto.login.LoginUserCommand;

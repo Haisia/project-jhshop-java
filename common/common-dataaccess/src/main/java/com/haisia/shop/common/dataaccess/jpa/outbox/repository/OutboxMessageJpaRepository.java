@@ -1,6 +1,6 @@
-package com.haisia.shop.auth.service.dataaccess.outbox.repository;
+package com.haisia.shop.common.dataaccess.jpa.outbox.repository;
 
-import com.haisia.shop.auth.service.dataaccess.outbox.entity.OutboxMessageJpaEntity;
+import com.haisia.shop.common.dataaccess.jpa.outbox.entity.OutboxMessageJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

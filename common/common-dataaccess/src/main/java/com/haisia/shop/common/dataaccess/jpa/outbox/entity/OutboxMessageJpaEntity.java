@@ -1,4 +1,4 @@
-package com.haisia.shop.auth.service.dataaccess.outbox.entity;
+package com.haisia.shop.common.dataaccess.jpa.outbox.entity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.haisia.shop.common.domain.entity.BaseEntity;

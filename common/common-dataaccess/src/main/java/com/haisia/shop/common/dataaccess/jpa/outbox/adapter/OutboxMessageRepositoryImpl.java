@@ -1,10 +1,10 @@
-package com.haisia.shop.auth.service.dataaccess.outbox.adapter;
+package com.haisia.shop.common.dataaccess.jpa.outbox.adapter;
 
-import com.haisia.shop.auth.service.dataaccess.outbox.entity.OutboxMessageJpaEntity;
-import com.haisia.shop.auth.service.dataaccess.outbox.mapper.OutboxMessageDataaccessMapper;
-import com.haisia.shop.auth.service.dataaccess.outbox.repository.OutboxMessageJpaRepository;
-import com.haisia.shop.auth.service.domain.ports.output.repository.OutboxMessageRepository;
+import com.haisia.shop.common.dataaccess.jpa.outbox.entity.OutboxMessageJpaEntity;
+import com.haisia.shop.common.dataaccess.jpa.outbox.mapper.OutboxMessageDataaccessMapper;
+import com.haisia.shop.common.dataaccess.jpa.outbox.repository.OutboxMessageJpaRepository;
 import com.haisia.shop.common.domain.outbox.OutboxMessage;
+import com.haisia.shop.common.domain.ports.output.repository.OutboxMessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
