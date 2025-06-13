@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "refresh_token_record")
 @Entity
@@ -46,8 +45,7 @@ public class RefreshTokenRecord extends AggregateRoot<RefreshTokenRecordId> {
   }
 
   @Builder
-  private RefreshTokenRecord(RefreshTokenRecordId id, String token, UserAuthId userAuthId, int refreshCount, boolean available) {
-    this.id = id;
+  private RefreshTokenRecord(String token, UserAuthId userAuthId, int refreshCount, boolean available) {
     this.token = token;
     this.userAuthId = userAuthId;
     this.refreshCount = refreshCount;

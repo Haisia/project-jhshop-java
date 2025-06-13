@@ -2,6 +2,7 @@ package com.haisia.shop.auth.service.domain.handler.event;
 
 import com.haisia.shop.auth.service.domain.ports.output.repository.OutboxMessageRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
+import com.haisia.shop.auth.service.domain.userloginrecord.UserLoginRecordDomainService;
 import com.haisia.shop.auth.service.domain.userloginrecord.entity.UserLoginRecord;
 import com.haisia.shop.auth.service.domain.userloginrecord.event.UserLoginSucceedEvent;
 import com.haisia.shop.common.domain.outbox.OutboxMessage;
@@ -31,6 +32,7 @@ public class LoginSucceedEventListener {
   private final UserLoginRecordRepository userLoginRecordRepository;
   private final OutboxMessageRepository outboxMessageRepository;
   private final OutboxMessageFactory outboxMessageFactory;
+  private final UserLoginRecordDomainService userLoginRecordDomainService;
 
   @Async
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
@@ -38,13 +40,14 @@ public class LoginSucceedEventListener {
   public void handleLoginSucceed(UserLoginSucceedEvent event) {
 
     UserLoginRecord newRecord = UserLoginRecord.builder()
-      .id(new UserLoginRecordId(UUID.randomUUID()))
       .userAuthId(event.getUserAuthId())
       .email(event.getEmail())
       .succeedAt(event.getCreatedAt().toInstant())
       .ipAddress(event.getIpAddress())
       .isFirstLoginOfDay(false)
       .build();
+
+    userLoginRecordDomainService.validateAndInitiate(newRecord);
 
     LocalDate today = event.getCreatedAt().toLocalDate();
     boolean hasPriorLoginToday = userLoginRecordRepository.existsByUserAuthIdAndCreatedAtBetween(

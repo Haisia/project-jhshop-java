@@ -58,14 +58,12 @@ public class Product extends AggregateRoot<ProductId> {
 
   @Builder
   private Product(
-    ProductId id,
     String name,
     Money price,
     Stock stock,
     ProductInformation information,
     SellerId sellerId
   ) {
-    this.id = id;
     this.name = name;
     this.price = price;
     this.stock = stock;

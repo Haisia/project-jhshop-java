@@ -1,6 +1,5 @@
 package com.haisia.shop.auth.service.domain.userauth.entity;
 
-import com.haisia.shop.auth.service.domain.userauth.exception.UserAuthDomainException;
 import com.haisia.shop.common.domain.entity.AggregateRoot;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import jakarta.persistence.*;
@@ -11,11 +10,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_auth")
 @Entity
@@ -48,8 +44,7 @@ public class UserAuth extends AggregateRoot<UserAuthId> {
   }
 
   @Builder
-  private UserAuth(UserAuthId userAuthId, String email, String hashedPassword) {
-    this.id = userAuthId;
+  private UserAuth(String email, String hashedPassword) {
     this.email = email;
     this.hashedPassword = hashedPassword;
   }

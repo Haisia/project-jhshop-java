@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_login_record")
 @Entity
@@ -46,14 +45,12 @@ public class UserLoginRecord extends AggregateRoot<UserLoginRecordId> {
 
   @Builder
   private UserLoginRecord(
-    UserLoginRecordId id,
     UserAuthId userAuthId,
     String email,
     Instant succeedAt,
     String ipAddress,
     boolean isFirstLoginOfDay
   ) {
-    this.id = id;
     this.userAuthId = userAuthId;
     this.email = email;
     this.succeedAt = succeedAt;

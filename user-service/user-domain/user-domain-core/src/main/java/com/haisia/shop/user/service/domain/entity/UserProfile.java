@@ -80,7 +80,6 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
 
   @Builder
   private UserProfile(
-    UserProfileId userProfileId,
     UserAuthId userAuthId,
     String email,
     Address address,
@@ -88,7 +87,6 @@ public class UserProfile extends AggregateRoot<UserProfileId> {
     Money balance,
     List<Ledger> ledgers
   ) {
-    this.id = userProfileId;
     this.userAuthId = userAuthId;
     this.email = email;
     this.address = address;
