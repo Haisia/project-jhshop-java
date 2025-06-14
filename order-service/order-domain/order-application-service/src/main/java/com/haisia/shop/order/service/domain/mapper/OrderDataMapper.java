@@ -18,7 +18,6 @@ public class OrderDataMapper {
     Order order = Order.builder()
       .price(new Money(command.price()))
       .buyer(new UserAuthId(UUID.fromString(userSession.userAuthId())))
-      .seller(new UserAuthId(command.seller()))
       .deliveryAddress(command.deliveryAddress())
       .build();
 

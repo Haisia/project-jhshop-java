@@ -9,7 +9,6 @@ import java.util.UUID;
 public record CreateOrderCommand(
   List<Item> orderItems,
   BigDecimal price,
-  UUID seller,
   Address deliveryAddress
 ) {
   public record Item(

@@ -18,7 +18,6 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
   protected void executeValidations(Map<String, String> errors) {
     validateOrderItemsAndPrice(errors);
     validateBuyer(errors);
-    validateSeller(errors);
     validateAddress(errors);
   }
 
@@ -74,10 +73,6 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
 
   private void validateBuyer(Map<String, String> errors) {
     super.validateBaseId(errors, target.getBuyer(), "buyer");
-  }
-
-  private void validateSeller(Map<String, String> errors) {
-    super.validateBaseId(errors, target.getSeller(), "seller");
   }
 
   private void validateAddress(Map<String, String> errors) {

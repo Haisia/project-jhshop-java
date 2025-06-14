@@ -45,12 +45,6 @@ public class Order extends AggregateRoot<OrderId> {
   )
   @Embedded
   private UserAuthId buyer;
-  @AttributeOverride(
-    name = "value",
-    column = @Column(name = "seller", columnDefinition = "uuid", nullable = false)
-  )
-  @Embedded
-  private UserAuthId seller;
   @Embedded
   private Address deliveryAddress;
   @AttributeOverride(
@@ -69,7 +63,6 @@ public class Order extends AggregateRoot<OrderId> {
     List<OrderItem> orderItems,
     Money price,
     UserAuthId buyer,
-    UserAuthId seller,
     Address deliveryAddress,
     TrackingId trackingId,
     OrderStatus orderStatus
@@ -77,7 +70,6 @@ public class Order extends AggregateRoot<OrderId> {
     this.price = price;
     this.orderItems.addAll(orderItems == null ? Collections.emptyList() : orderItems);
     this.buyer = buyer;
-    this.seller = seller;
     this.deliveryAddress = deliveryAddress;
     this.trackingId = trackingId;
     this.orderStatus = orderStatus;

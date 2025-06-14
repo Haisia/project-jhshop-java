@@ -42,7 +42,6 @@ public class OrderCreatedEventListener {
       .orderItems(event.getOrder().getOrderItems().stream().map(this::toPayload).collect(Collectors.toList()))
       .price(event.getOrder().getPrice().amount())
       .buyerUserAuthId(event.getOrder().getBuyer().getValue())
-      .sellerUserAuthId(event.getOrder().getSeller().getValue())
       .build();
   }
 

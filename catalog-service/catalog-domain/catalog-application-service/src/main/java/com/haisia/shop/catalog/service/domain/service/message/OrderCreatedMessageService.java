@@ -24,7 +24,6 @@ import java.util.Optional;
 @Component
 public class OrderCreatedMessageService implements OrderCreatedUsecase {
 
-  private final SellerRepository sellerRepository;
   private final ProductRepository productRepository;
 
   @Transactional
@@ -37,11 +36,6 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
      * 3. price 검증
      * 4. 주문에 따른 product 재고 감소
      * */
-
-    Optional<Seller> optionalSeller = sellerRepository.findByUserAuthId(new UserAuthId(payload.getSellerUserAuthId()));
-    if (optionalSeller.isEmpty()) {
-      throw new DomainException("Seller 를 찾을 수 없습니다. sellerUserAuthId: " + payload.getSellerUserAuthId());
-    }
 
     Map<ProductId, Product> findProductsMap = productRepository.findAllByIds(
       payload.getOrderItems().stream().map(item -> new ProductId(item.productId())).toList()

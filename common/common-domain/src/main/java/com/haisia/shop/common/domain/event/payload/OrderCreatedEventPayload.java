@@ -13,7 +13,6 @@ public class OrderCreatedEventPayload extends EventPayload {
   private final List<OrderItem> orderItems;
   private final BigDecimal price;
   private final UUID buyerUserAuthId;
-  private final UUID sellerUserAuthId;
 
   @Builder
   public record OrderItem(
@@ -34,13 +33,11 @@ public class OrderCreatedEventPayload extends EventPayload {
     UUID aggregateId,
     List<OrderItem> orderItems,
     BigDecimal price,
-    UUID buyerUserAuthId,
-    UUID sellerUserAuthId
+    UUID buyerUserAuthId
   ) {
     super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null);
     this.orderItems = orderItems;
     this.price = price;
     this.buyerUserAuthId = buyerUserAuthId;
-    this.sellerUserAuthId = sellerUserAuthId;
   }
 }
