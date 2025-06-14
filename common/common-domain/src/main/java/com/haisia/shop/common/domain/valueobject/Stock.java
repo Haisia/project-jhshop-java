@@ -11,8 +11,12 @@ public record Stock(
 ) {
   public static final Stock ZERO = new Stock(BigDecimal.ZERO);
 
-  public Stock(BigDecimal amount) {
-    this.amount = amount;
+  public Stock {
+    if (amount != null) amount = amount.setScale(0, RoundingMode.DOWN);
+  }
+
+  public Stock(Integer amount) {
+    this(new BigDecimal(amount));
   }
 
   public boolean isGreaterThanZero() {

@@ -12,8 +12,12 @@ public record Money(
 ) {
   public static final Money ZERO = new Money(BigDecimal.ZERO);
 
-  public Money(BigDecimal amount) {
-    this.amount = amount;
+  public Money {
+    if (amount != null) amount = amount.setScale(0, RoundingMode.DOWN);
+  }
+
+  public Money(Integer amount) {
+    this(new BigDecimal(amount).setScale(0, RoundingMode.DOWN));
   }
 
   public boolean isGreaterThanZero() {

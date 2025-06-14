@@ -1,0 +1,43 @@
+[
+
+  {
+    "name": "비요뜨",
+    "price": "2500",
+    "stock": "5",
+    "information": {
+      "title": "떠먹는 요구르트 비요뜨",
+      "content": "플레인 맛"
+    }
+  },
+
+  {
+    "name": "빙그레 바나나맛 우유",
+    "price": "1700",
+    "stock": "32",
+    "information": {
+      "title": "빙그레 바나나맛 우유",
+      "content": "대한민국 국민 우유 빙그레 바나나맛 우유"
+    }
+  },
+
+  {
+    "name": "신라면",
+    "price": "1200",
+    "stock": "68",
+    "information": {
+      "title": "농심 신라면",
+      "content": "사나이 울리는 맛 농심 신라면"
+    }
+  },
+
+  {
+    "name": "햇반 백미밥",
+    "price": "1400",
+    "stock": "1",
+    "information": {
+      "title": "햇반 백미밥, 210g",
+      "content": "언제나 맛있는 집밥"
+    }
+  }
+
+]

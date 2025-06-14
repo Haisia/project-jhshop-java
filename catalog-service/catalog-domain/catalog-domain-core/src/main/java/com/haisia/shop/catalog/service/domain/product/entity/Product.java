@@ -84,4 +84,12 @@ public class Product extends AggregateRoot<ProductId> {
   }
 
   // ---
+
+  public void decreaseStock(Stock stock) {
+    this.stock = this.stock.subtract(stock);
+  }
+
+  public void increaseStock(Stock stock) {
+    this.stock = this.stock.add(stock);
+  }
 }

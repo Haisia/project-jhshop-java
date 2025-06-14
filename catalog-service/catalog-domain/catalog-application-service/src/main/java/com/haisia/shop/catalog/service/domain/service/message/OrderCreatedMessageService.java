@@ -10,13 +10,14 @@ import com.haisia.shop.common.domain.exception.DomainException;
 import com.haisia.shop.common.domain.saga.SagaFailureStatus;
 import com.haisia.shop.common.domain.saga.SagaStatus;
 import com.haisia.shop.common.domain.valueobject.Money;
+import com.haisia.shop.common.domain.valueobject.Stock;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
      * 1. seller 검증
      * 2. product 검증
      * 3. price 검증
+     * 4. 주문에 따른 product 재고 감소
      * */
 
     Optional<Seller> optionalSeller = sellerRepository.findByUserAuthId(new UserAuthId(payload.getSellerUserAuthId()));
@@ -41,20 +43,40 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
       throw new DomainException("Seller 를 찾을 수 없습니다. sellerUserAuthId: " + payload.getSellerUserAuthId());
     }
 
+    Map<ProductId, Product> findProductsMap = productRepository.findAllByIds(
+      payload.getOrderItems().stream().map(item -> new ProductId(item.productId())).toList()
+    );
+
     payload.getOrderItems()
       .forEach(item -> {
-        Product product = productRepository.findById(new ProductId(item.productId()))
-          .orElseThrow(() -> new DomainException("Product 를 찾을 수 없습니다. productId: " + item.productId()));
+        Product product = findProductsMap.get(new ProductId(item.productId()));
+        if (product == null) {
+          throw new DomainException("Product 를 찾을 수 없습니다. productId: " + item.productId());
+        }
+
         if (!product.getPrice().equals(new Money(item.price()))) {
           throw new DomainException(
             String.format(
-              "OrderItem.price 가 기대값과 다릅니다. item.price: %s, product.price: %s",
+              "OrderItem.price 가 기대값과 다릅니다. orderItem.price: %s, product.price: %s",
               item.price(),
               product.getPrice()
             )
           );
         }
+
+        if (product.getStock().isLessThan(new Stock(item.quantity()))) {
+          throw new DomainException(String.format(
+            "Product 의 재고가 Order 보다 적습니다. product.stock : %s, order.quantity : %s",
+            product.getStock(),
+            item.quantity())
+          );
+        }
       });
+
+    payload.getOrderItems().forEach(item -> {
+      Product product = findProductsMap.get(new ProductId(item.productId()));
+      product.decreaseStock(new Stock(item.quantity()));
+    });
   }
 
   @Override

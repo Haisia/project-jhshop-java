@@ -7,7 +7,10 @@ import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -23,5 +26,11 @@ public class ProductRepositoryImpl implements ProductRepository {
   @Override
   public Optional<Product> findById(ProductId id) {
     return repository.findById(id);
+  }
+
+  @Override
+  public Map<ProductId, Product> findAllByIds(Iterable<ProductId> ids) {
+    return repository.findAllById(ids).stream()
+      .collect(Collectors.toMap(Product::getId, product -> product));
   }
 }
