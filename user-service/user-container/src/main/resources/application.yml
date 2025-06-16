@@ -1,6 +1,8 @@
 server:
   port: 9002
 
+# === common.start ===
+
 eureka:
   client:
     register-with-eureka: true
@@ -10,6 +12,18 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
     hostname: localhost
+
+feign:
+  secret:
+    key: ${FEIGN_SECRET_KEY}
+
+saga:
+  compensate:
+    scheduler:
+      fixed-delay-string: ${SAGA_COMPENSATE_SCHEDULER_FIXED_DELAY}
+      initial-delay-string: ${SAGA_COMPENSATE_SCHEDULER_INITIAL_DELAY}
+
+# === common.end ===
 
 spring:
   application:
@@ -36,7 +50,3 @@ spring:
       bindings:
         processUserLoggedInFirstToday-in-0:
           destination: UserLoggedInFirstToday.events
-
-feign:
-  secret:
-    key: ${FEIGN_SECRET_KEY}

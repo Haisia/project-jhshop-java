@@ -17,7 +17,7 @@ public class OutboxMessageRepositoryImpl implements OutboxMessageRepository {
 
   @Override
   public OutboxMessage save(OutboxMessage message) {
-    OutboxMessageJpaEntity jpaEntity = mapper.outboxMessageToOutboxMessageJpaEntity(message);
+    OutboxMessageJpaEntity jpaEntity = mapper.toJpaEntity(message);
     OutboxMessageJpaEntity save = repository.save(jpaEntity);
 //    mapper.outboxMessageJpaEntityToOutboxMessage(save, jsonNode -> objectMapper.readValue(jsonNode, ))
     return null;

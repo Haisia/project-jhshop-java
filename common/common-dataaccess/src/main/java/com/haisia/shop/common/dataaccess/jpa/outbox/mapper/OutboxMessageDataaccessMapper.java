@@ -13,7 +13,7 @@ public class OutboxMessageDataaccessMapper {
 
   private final ObjectMapper objectMapper;
 
-  public OutboxMessageJpaEntity outboxMessageToOutboxMessageJpaEntity(OutboxMessage outboxMessage) {
+  public OutboxMessageJpaEntity toJpaEntity(OutboxMessage outboxMessage) {
     return OutboxMessageJpaEntity.builder()
       .sagaId(outboxMessage.getSagaId())
       .aggregateId(outboxMessage.getAggregateId())

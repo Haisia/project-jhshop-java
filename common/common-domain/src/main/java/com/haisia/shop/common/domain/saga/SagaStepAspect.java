@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 
@@ -19,7 +20,9 @@ public class SagaStepAspect {
 
   private final EventPayloadRepository eventPayloadRepository;
   private final SagaStatus DEFAULT_SAGA_STATUS = SagaStatus.FAILED;
+  private final EventPayloadStatusUpdater eventPayloadStatusUpdater;
 
+  @Transactional
   @Around("execution(* com.haisia.shop.common.domain.saga.SagaStep+.process(..)) && args(payload)")
   public Object handleSagaStepProcess(ProceedingJoinPoint joinPoint, EventPayload payload) throws Throwable {
     EventPayload savedEventPayload = eventPayloadRepository.save(payload);
@@ -35,7 +38,7 @@ public class SagaStepAspect {
       setSagaStatusByAnnotation(joinPoint, savedEventPayload);
       throw e;
     } finally {
-      eventPayloadRepository.save(savedEventPayload);
+      eventPayloadStatusUpdater.updateStatus(savedEventPayload);
     }
     return result;
   }
