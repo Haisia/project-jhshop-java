@@ -7,12 +7,13 @@ plugins {
 dependencies {
   implementation project(":order-service:order-application")
   implementation project(":order-service:order-dataaccess")
-  implementation project(":catalog-service:catalog-messaging")
+  implementation project(":order-service:order-messaging")
   implementation project(":order-service:order-domain:order-application-service")
   implementation project(":order-service:order-domain:order-domain-core")
 
   implementation "org.springframework.boot:spring-boot-starter"
   implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 bootBuildImage {

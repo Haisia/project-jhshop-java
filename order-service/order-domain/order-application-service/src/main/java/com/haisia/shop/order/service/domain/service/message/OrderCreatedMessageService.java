@@ -45,5 +45,6 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
         () -> new DomainException("EventPayload 를 찾을 수 없습니다. sagaId = " + payload.getSagaId().toString())
       );
     eventPayload.setSagaStatus(SagaStatus.COMPENSATED);
+    eventPayloadRepository.save(eventPayload);
   }
 }

@@ -57,3 +57,4 @@ spring:
         processOrderCreated-in-0:
           destination: OrderCreated.events
           contentType: application/json
+          group: order-service-group
