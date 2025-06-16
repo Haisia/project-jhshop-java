@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 public class SagaStepAspect {
 
   private final EventPayloadRepository eventPayloadRepository;
+  private final SagaStatus DEFAULT_SAGA_STATUS = SagaStatus.FAILED;
 
   @Around("execution(* com.haisia.shop.common.domain.saga.SagaStep+.process(..)) && args(payload)")
   public Object handleSagaStepProcess(ProceedingJoinPoint joinPoint, EventPayload payload) throws Throwable {
@@ -31,19 +32,22 @@ public class SagaStepAspect {
       result = joinPoint.proceed();
       savedEventPayload.setSagaStatus(SagaStatus.SUCCEEDED);
     } catch (Throwable e) {
-      MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-      Method method = signature.getMethod();
-
-      if (method.isAnnotationPresent(SagaFailureStatus.class)) {
-        SagaFailureStatus sagaFailStatus = method.getAnnotation(SagaFailureStatus.class);
-        savedEventPayload.setSagaStatus(sagaFailStatus.value());
-      } else {
-        savedEventPayload.setSagaStatus(SagaStatus.FAILED);
-      }
+      setSagaStatusByAnnotation(joinPoint, savedEventPayload);
       throw e;
     } finally {
       eventPayloadRepository.save(savedEventPayload);
     }
     return result;
+  }
+
+  private void setSagaStatusByAnnotation(ProceedingJoinPoint joinPoint, EventPayload savedEventPayload) {
+    MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+    Method method = signature.getMethod();
+
+    SagaStatus sagaStatus = DEFAULT_SAGA_STATUS;
+    if (method.isAnnotationPresent(SagaFailureStatus.class)) {
+      sagaStatus = method.getAnnotation(SagaFailureStatus.class).value();
+    }
+    savedEventPayload.setSagaStatus(sagaStatus);
   }
 }
