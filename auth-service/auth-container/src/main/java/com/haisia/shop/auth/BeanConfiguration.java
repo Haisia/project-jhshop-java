@@ -1,4 +1,4 @@
-package com.haisia.shop;
+package com.haisia.shop.auth;
 
 import com.haisia.shop.auth.service.domain.refreshtokenrecord.RefreshTokenRecordDomainService;
 import com.haisia.shop.auth.service.domain.refreshtokenrecord.RefreshTokenRecordDomainServiceImpl;

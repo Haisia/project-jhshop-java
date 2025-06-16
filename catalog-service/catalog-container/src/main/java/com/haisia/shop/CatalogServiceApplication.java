@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaAuditing
-@EnableJpaRepositories(basePackages = {"com.haisia.shop"})
-@EntityScan(basePackages = {"com.haisia.shop"})
-@SpringBootApplication(scanBasePackages = "com.haisia.shop")
+@EnableJpaRepositories(basePackages = {"com.haisia.shop.catalog", "com.haisia.shop.common"})
+@EntityScan(basePackages = {"com.haisia.shop.catalog", "com.haisia.shop.common"})
+@SpringBootApplication(scanBasePackages = {"com.haisia.shop.catalog", "com.haisia.shop.common"})
 public class CatalogServiceApplication {
   public static void main(String[] args) {
     SpringApplication.run(CatalogServiceApplication.class, args);

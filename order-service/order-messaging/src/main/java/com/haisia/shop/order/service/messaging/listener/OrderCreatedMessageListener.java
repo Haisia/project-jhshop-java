@@ -1,8 +1,8 @@
-package com.haisia.shop.catalog.service.messaging.listener;
+package com.haisia.shop.order.service.messaging.listener;
 
-import com.haisia.shop.catalog.service.domain.ports.input.message.OrderCreatedUsecase;
 import com.haisia.shop.common.domain.event.payload.OrderCreatedEventPayload;
 import com.haisia.shop.common.messaging.EventPayloadFactory;
+import com.haisia.shop.order.service.domain.ports.input.message.OrderCreatedUsecase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

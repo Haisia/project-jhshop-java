@@ -19,6 +19,7 @@ public class OutboxMessageDataaccessMapper {
       .aggregateId(outboxMessage.getAggregateId())
       .aggregateType(outboxMessage.getAggregateType())
       .eventName(outboxMessage.getEventName())
+      .action(outboxMessage.getAction())
       .payload(objectMapper.convertValue(outboxMessage.getPayload(), JsonNode.class))
       .build();
   }

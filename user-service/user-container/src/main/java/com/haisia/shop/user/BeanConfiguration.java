@@ -1,4 +1,4 @@
-package com.haisia.shop;
+package com.haisia.shop.user;
 
 import com.haisia.shop.user.service.domain.UserProfileDomainService;
 import com.haisia.shop.user.service.domain.UserProfileDomainServiceImpl;

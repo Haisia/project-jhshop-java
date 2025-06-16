@@ -1,4 +1,4 @@
-package com.haisia.shop;
+package com.haisia.shop.order;
 
 import com.haisia.shop.order.service.domain.order.OrderDomainService;
 import com.haisia.shop.order.service.domain.order.OrderDomainServiceImpl;

@@ -1,0 +1,31 @@
+{
+  "name": "customer_catalog_connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname": "jhshop_postgres",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "postgres",
+    "database.dbname": "catalog",
+    "database.server.name": "catalog_server",
+    "slot.name": "catalog_db_slot",
+    "replication.slot.name": "catalog_db_slot",
+    "plugin.name": "decoderbufs",
+    "decimal.handling.mode": "string",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "tombstones.on.delete": "false",
+    "table.include.list": "public.outbox_message",
+    "topic.prefix": "catalog_db",
+    "transforms": "outbox",
+    "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
+    "transforms.outbox.route.topic.replacement": "${routedByValue}.events",
+    "transforms.outbox.table.fields.additional.placement": "event_name:header:eventType",
+    "transforms.outbox.table.field.event.key": "aggregate_id",
+    "transforms.outbox.table.field.event.payload.id": "aggregate_id",
+    "transforms.outbox.route.by.field": "event_name",
+    "transforms.outbox.event.type.field.name": "event_name"
+  }
+}

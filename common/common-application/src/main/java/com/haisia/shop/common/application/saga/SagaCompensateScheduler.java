@@ -43,6 +43,7 @@ public class SagaCompensateScheduler {
       .aggregateId(eventPayload.getAggregateId())
       .aggregateType(eventPayload.getAggregateType())
       .eventName(eventPayload.getEventName())
+      .action(eventPayload.getAction())
       .payload(eventPayload)
       .build();
   }

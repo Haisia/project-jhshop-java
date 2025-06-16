@@ -14,6 +14,7 @@ public class SagaEventDataaccessMapper {
       .aggregateType(payload.getAggregateType())
       .eventName(payload.getEventName())
       .status(payload.getSagaStatus())
+      .action(payload.getAction())
       .build();
   }
 
@@ -23,7 +24,8 @@ public class SagaEventDataaccessMapper {
       jpaEntity.getAggregateId(),
       jpaEntity.getAggregateType(),
       jpaEntity.getEventName(),
-      jpaEntity.getStatus()
+      jpaEntity.getStatus(),
+      jpaEntity.getAction()
     );
   }
 }

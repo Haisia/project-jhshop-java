@@ -2,6 +2,7 @@ package com.haisia.shop.common.dataaccess.jpa.outbox.entity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.haisia.shop.common.domain.entity.BaseEntity;
+import com.haisia.shop.common.domain.saga.SagaAction;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +34,10 @@ public class OutboxMessageJpaEntity extends BaseEntity<Long> {
 
   @Column(nullable = false)
   private String eventName;
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private SagaAction action;
 
   @Type(JsonType.class)
   @Column(columnDefinition = "json")

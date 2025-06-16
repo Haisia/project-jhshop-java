@@ -46,3 +46,14 @@ spring:
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
       timeout: 5000ms
+  cloud:
+    function:
+      definition: processOrderCreated;
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        processOrderCreated-in-0:
+          destination: OrderCreated.events
+          contentType: application/json

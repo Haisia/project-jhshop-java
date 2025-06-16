@@ -1,6 +1,7 @@
 package com.haisia.shop.common.domain.event.payload;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.haisia.shop.common.domain.saga.SagaAction;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -33,9 +34,10 @@ public class OrderCreatedEventPayload extends EventPayload {
     UUID aggregateId,
     List<OrderItem> orderItems,
     BigDecimal price,
-    UUID buyerUserAuthId
+    UUID buyerUserAuthId,
+    SagaAction sagaAction
   ) {
-    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null);
+    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null, sagaAction);
     this.orderItems = orderItems;
     this.price = price;
     this.buyerUserAuthId = buyerUserAuthId;

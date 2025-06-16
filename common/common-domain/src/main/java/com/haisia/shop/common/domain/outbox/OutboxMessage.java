@@ -1,6 +1,7 @@
 package com.haisia.shop.common.domain.outbox;
 
 import com.haisia.shop.common.domain.event.payload.EventPayload;
+import com.haisia.shop.common.domain.saga.SagaAction;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class OutboxMessage {
   private final String eventName;
   private final LocalDateTime createdAt;
   private final EventPayload payload;
+  private final SagaAction action;
 
   @Builder
   private OutboxMessage(
@@ -21,7 +23,8 @@ public class OutboxMessage {
     String aggregateType,
     String eventName,
     LocalDateTime createdAt,
-    EventPayload payload
+    EventPayload payload,
+    SagaAction action
   ) {
     this.sagaId = sagaId;
     this.aggregateId = aggregateId;
@@ -29,6 +32,7 @@ public class OutboxMessage {
     this.eventName = eventName;
     this.createdAt = createdAt;
     this.payload = payload;
+    this.action = action == null ? SagaAction.PROCESS : action;
   }
 
   public UUID getSagaId() {
@@ -53,5 +57,9 @@ public class OutboxMessage {
 
   public EventPayload getPayload() {
     return payload;
+  }
+
+  public SagaAction getAction() {
+    return action;
   }
 }

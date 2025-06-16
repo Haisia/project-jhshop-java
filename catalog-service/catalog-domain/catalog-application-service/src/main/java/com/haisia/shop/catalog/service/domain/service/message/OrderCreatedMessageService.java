@@ -14,12 +14,14 @@ import com.haisia.shop.common.domain.valueobject.Stock;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class OrderCreatedMessageService implements OrderCreatedUsecase {
@@ -75,7 +77,6 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
 
   @Override
   public void rollback(OrderCreatedEventPayload payload) {
-
+    log.debug("OrderCreatedEventPayload 의 rollback 메세지를 수신했지만, 아무것도 하지 않음.");
   }
-
 }

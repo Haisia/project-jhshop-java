@@ -132,4 +132,8 @@ public class Order extends AggregateRoot<OrderId> {
     return orderItem;
   }
 
+  public void changeStatus(OrderStatus status) {
+    this.orderStatus = status;
+  }
+
 }

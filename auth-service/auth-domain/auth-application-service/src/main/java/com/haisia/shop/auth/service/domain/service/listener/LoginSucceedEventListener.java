@@ -1,5 +1,6 @@
 package com.haisia.shop.auth.service.domain.service.listener;
 
+import com.haisia.shop.common.domain.ports.output.repository.EventPayloadRepository;
 import com.haisia.shop.common.domain.ports.output.repository.OutboxMessageRepository;
 import com.haisia.shop.auth.service.domain.ports.output.repository.UserLoginRecordRepository;
 import com.haisia.shop.auth.service.domain.userloginrecord.UserLoginRecordDomainService;
@@ -8,6 +9,7 @@ import com.haisia.shop.auth.service.domain.userloginrecord.event.UserLoginSuccee
 import com.haisia.shop.common.domain.event.payload.UserLoggedInFirstTodayEventPayload;
 import com.haisia.shop.common.domain.outbox.OutboxMessage;
 import com.haisia.shop.common.domain.outbox.OutboxMessageFactory;
+import com.haisia.shop.common.domain.saga.SagaAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -32,6 +34,7 @@ public class LoginSucceedEventListener {
   private final OutboxMessageRepository outboxMessageRepository;
   private final OutboxMessageFactory outboxMessageFactory;
   private final UserLoginRecordDomainService userLoginRecordDomainService;
+  private final EventPayloadRepository eventPayloadRepository;
 
   @Async
   @TransactionalEventListener(phase = TransactionPhase.AFTER_COMPLETION)
@@ -64,10 +67,11 @@ public class LoginSucceedEventListener {
           .aggregateId(newRecord.getId().getValue())
           .userAuthId(event.getUserAuthId().getValue())
           .loggedInTime(event.getCreatedAt().toLocalDateTime())
+          .sagaAction(SagaAction.PROCESS)
           .build();
+      eventPayloadRepository.save(userLoggedInFirstTodayEventPayload);
 
       OutboxMessage outboxMessage = outboxMessageFactory.create(userLoggedInFirstTodayEventPayload);
-
       outboxMessageRepository.save(outboxMessage);
     }
 

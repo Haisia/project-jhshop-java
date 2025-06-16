@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,12 @@ public class EventPayloadRepositoryImpl implements EventPayloadRepository {
   public EventPayload save(EventPayload eventPayload) {
     SagaEventJpaEntity jpaEntity = mapper.toJpaEntity(eventPayload);
     return mapper.toEventPayload(repository.save(jpaEntity));
+  }
+
+  @Override
+  public Optional<EventPayload> findById(UUID sagaId) {
+    return repository.findById(sagaId)
+      .map(mapper::toEventPayload);
   }
 
   @Override

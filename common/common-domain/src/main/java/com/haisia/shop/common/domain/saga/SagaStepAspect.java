@@ -36,6 +36,7 @@ public class SagaStepAspect {
       savedEventPayload.setSagaStatus(SagaStatus.SUCCEEDED);
     } catch (Throwable e) {
       setSagaStatusByAnnotation(joinPoint, savedEventPayload);
+      savedEventPayload.setAction(SagaAction.ROLLBACK);
       throw e;
     } finally {
       eventPayloadStatusUpdater.updateStatus(savedEventPayload);
