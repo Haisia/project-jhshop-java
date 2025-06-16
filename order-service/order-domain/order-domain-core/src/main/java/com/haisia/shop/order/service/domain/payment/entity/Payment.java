@@ -41,13 +41,32 @@ public class Payment extends AggregateRoot<PaymentId> {
   @Enumerated(EnumType.STRING)
   private PaymentStatus status;
 
+  private String cardHolderName;
+  private String cardHolderEmail;
+  private String cardNumber;
+  private String expiryDate;
+  private Integer cvc;
   // ---
 
   @Builder
-  private Payment(OrderId orderId, Money price, PaymentStatus status) {
+  private Payment(
+    OrderId orderId,
+    Money price,
+    PaymentStatus status,
+    String cardHolderName,
+    String cardHolderEmail,
+    String cardNumber,
+    String expiryDate,
+    Integer cvc
+  ) {
     this.orderId = orderId;
     this.price = price;
     this.status = status;
+    this.cardHolderName = cardHolderName;
+    this.cardHolderEmail = cardHolderEmail;
+    this.cardNumber = cardNumber;
+    this.expiryDate = expiryDate;
+    this.cvc = cvc;
   }
 
   @Override

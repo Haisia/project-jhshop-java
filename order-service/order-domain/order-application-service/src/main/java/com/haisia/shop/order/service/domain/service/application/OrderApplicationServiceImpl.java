@@ -1,4 +1,4 @@
-package com.haisia.shop.order.service.domain.service;
+package com.haisia.shop.order.service.domain.service.application;
 
 import com.haisia.shop.common.domain.valueobject.UserSession;
 import com.haisia.shop.order.service.domain.order.OrderDomainService;
