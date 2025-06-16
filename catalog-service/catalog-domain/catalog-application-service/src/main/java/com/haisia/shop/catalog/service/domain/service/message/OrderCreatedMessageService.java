@@ -47,13 +47,13 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
       .forEach(item -> {
         Product product = findProductsMap.get(new ProductId(item.productId()));
         if (product == null) {
-          throw new DomainException("Product 를 찾을 수 없습니다. productId: " + item.productId());
+          throw new DomainException("[catalog-service]Product 를 찾을 수 없습니다. productId: " + item.productId());
         }
 
         if (!product.getPrice().equals(new Money(item.price()))) {
           throw new DomainException(
             String.format(
-              "OrderItem.price 가 기대값과 다릅니다. orderItem.price: %s, product.price: %s",
+              "[catalog-service]OrderItem.price 가 기대값과 다릅니다. orderItem.price: %s, product.price: %s",
               item.price(),
               product.getPrice()
             )
@@ -61,10 +61,11 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
         }
 
         if (product.getStock().isLessThan(new Stock(item.quantity()))) {
-          throw new DomainException(String.format(
-            "Product 의 재고가 Order 보다 적습니다. product.stock : %s, order.quantity : %s",
-            product.getStock(),
-            item.quantity())
+          throw new DomainException(
+            String.format(
+              "[catalog-service]Product 의 재고가 Order 보다 적습니다. product.stock : %s, order.quantity : %s",
+              product.getStock(),
+              item.quantity())
           );
         }
       });
@@ -77,6 +78,6 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
 
   @Override
   public void rollback(OrderCreatedEventPayload payload) {
-    log.debug("OrderCreatedEventPayload 의 rollback 메세지를 수신했지만, 아무것도 하지 않음.");
+    log.debug("[catalog-service]OrderCreatedEventPayload 의 rollback 메세지를 수신했지만, 아무것도 하지 않음.");
   }
 }

@@ -25,4 +25,5 @@ public class SagaEventJpaEntity extends BaseEntity<UUID> {
   private SagaStatus status;
   @Enumerated(EnumType.STRING)
   private SagaAction action;
+  private String failureMessages;
 }

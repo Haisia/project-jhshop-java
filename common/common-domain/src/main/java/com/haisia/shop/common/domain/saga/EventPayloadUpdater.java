@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-class EventPayloadStatusUpdater {
+class EventPayloadUpdater {
 
   private final EventPayloadRepository eventPayloadRepository;
 
   @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public EventPayload updateStatus(EventPayload eventPayload) {
+  public EventPayload update(EventPayload eventPayload) {
     return eventPayloadRepository.save(eventPayload);
   }
 

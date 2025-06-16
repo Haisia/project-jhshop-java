@@ -37,7 +37,7 @@ public class OrderCreatedEventPayload extends EventPayload {
     UUID buyerUserAuthId,
     SagaAction sagaAction
   ) {
-    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null, sagaAction);
+    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null, sagaAction, null);
     this.orderItems = orderItems;
     this.price = price;
     this.buyerUserAuthId = buyerUserAuthId;

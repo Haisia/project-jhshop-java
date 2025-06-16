@@ -37,7 +37,7 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
       .orElseThrow(
         () -> new OrderNotFoundException("Order 를 찾을 수 없습니다. orderId = " + orderId.getValue().toString())
       );
-
+    order.addFailureMessages(payload.getFailureMessages());
     order.changeStatus(OrderStatus.CANCELLED);
 
     EventPayload eventPayload = eventPayloadRepository.findById(payload.getSagaId())

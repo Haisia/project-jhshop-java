@@ -55,7 +55,7 @@ public class Order extends AggregateRoot<OrderId> {
   private TrackingId trackingId;
   @Enumerated(EnumType.STRING)
   private OrderStatus orderStatus;
-
+  private String failureMessage;
   // ---
 
   @Builder
@@ -65,7 +65,8 @@ public class Order extends AggregateRoot<OrderId> {
     UserAuthId buyer,
     Address deliveryAddress,
     TrackingId trackingId,
-    OrderStatus orderStatus
+    OrderStatus orderStatus,
+    String failureMessage
   ) {
     this.price = price;
     this.orderItems.addAll(orderItems == null ? Collections.emptyList() : orderItems);
@@ -73,6 +74,7 @@ public class Order extends AggregateRoot<OrderId> {
     this.deliveryAddress = deliveryAddress;
     this.trackingId = trackingId;
     this.orderStatus = orderStatus;
+    this.failureMessage = failureMessage;
   }
 
   @Override
@@ -136,4 +138,12 @@ public class Order extends AggregateRoot<OrderId> {
     this.orderStatus = status;
   }
 
+  public void addFailureMessage(String message) {
+    if (message == null) return;
+    this.failureMessage = failureMessage == null ? message : String.join(",", this.failureMessage, message, message);
+  }
+  public void addFailureMessages(List<String> messages) {
+    if (messages == null) return;
+    addFailureMessage(messages.isEmpty() ? null : String.join(",", messages));
+  }
 }

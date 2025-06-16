@@ -20,13 +20,13 @@ public class SagaStepAspect {
 
   private final EventPayloadRepository eventPayloadRepository;
   private final SagaStatus DEFAULT_SAGA_STATUS = SagaStatus.FAILED;
-  private final EventPayloadStatusUpdater eventPayloadStatusUpdater;
+  private final EventPayloadUpdater eventPayloadUpdater;
 
   @Transactional
   @Around("execution(* com.haisia.shop.common.domain.saga.SagaStep+.process(..)) && args(payload)")
   public Object handleSagaStepProcess(ProceedingJoinPoint joinPoint, EventPayload payload) throws Throwable {
     EventPayload savedEventPayload = eventPayloadRepository.save(payload);
-    if (savedEventPayload == null) {
+    if (eventPayloadRepository.save(payload) == null) {
       throw new DomainException("EventPayload 저장에 실패하였습니다. sagaId: " + payload.getSagaId());
     }
 
@@ -36,10 +36,11 @@ public class SagaStepAspect {
       savedEventPayload.setSagaStatus(SagaStatus.SUCCEEDED);
     } catch (Throwable e) {
       setSagaStatusByAnnotation(joinPoint, savedEventPayload);
+      savedEventPayload.addFailureMessage(e.getMessage());
       savedEventPayload.setAction(SagaAction.ROLLBACK);
       throw e;
     } finally {
-      eventPayloadStatusUpdater.updateStatus(savedEventPayload);
+      eventPayloadUpdater.update(savedEventPayload);
     }
     return result;
   }

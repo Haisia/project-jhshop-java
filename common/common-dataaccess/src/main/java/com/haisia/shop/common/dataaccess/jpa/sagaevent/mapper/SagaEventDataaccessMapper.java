@@ -4,6 +4,8 @@ import com.haisia.shop.common.domain.event.payload.EventPayload;
 import com.haisia.shop.common.dataaccess.jpa.sagaevent.entity.SagaEventJpaEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class SagaEventDataaccessMapper {
 
@@ -15,6 +17,7 @@ public class SagaEventDataaccessMapper {
       .eventName(payload.getEventName())
       .status(payload.getSagaStatus())
       .action(payload.getAction())
+      .failureMessages(payload.getFailureMessages().isEmpty() ? null : String.join(",", payload.getFailureMessages()))
       .build();
   }
 
@@ -25,7 +28,8 @@ public class SagaEventDataaccessMapper {
       jpaEntity.getAggregateType(),
       jpaEntity.getEventName(),
       jpaEntity.getStatus(),
-      jpaEntity.getAction()
+      jpaEntity.getAction(),
+      jpaEntity.getFailureMessages()
     );
   }
 }

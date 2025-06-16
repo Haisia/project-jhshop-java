@@ -26,7 +26,7 @@ public class UserLoggedInFirstTodayEventPayload extends EventPayload {
     LocalDateTime loggedInTime,
     SagaAction sagaAction
   ) {
-    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null, sagaAction);
+    super(sagaId, aggregateId, AGGREGATE_TYPE, EVENT_NAME, null, sagaAction, null);
     this.userAuthId = userAuthId;
     this.loggedInTime = loggedInTime;
   }
