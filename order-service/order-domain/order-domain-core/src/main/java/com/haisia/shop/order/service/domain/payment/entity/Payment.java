@@ -46,6 +46,7 @@ public class Payment extends AggregateRoot<PaymentId> {
   private String cardNumber;
   private String expiryDate;
   private Integer cvc;
+
   // ---
 
   @Builder
@@ -88,4 +89,8 @@ public class Payment extends AggregateRoot<PaymentId> {
   }
 
   // ---
+
+  public void changeStatus(PaymentStatus status) {
+    this.status = status;
+  }
 }

@@ -83,7 +83,7 @@ public class PaymentInitializer extends AggregateRootInitializer<Payment, Paymen
 
     String[] split = target.getExpiryDate().split("/");
     if (split.length != 2) {
-      errors.put("expiryDate", "payment.expiryDate 의 형식이 올바르지 않습니다. expect: MM/YY result: " + target.getExpiryDate());
+      errors.put("expiryDate", "payment.expiryDate 의 형식이 올바르지 않습니다. expect: MM/YY actual: " + target.getExpiryDate());
       return;
     }
 
@@ -91,7 +91,7 @@ public class PaymentInitializer extends AggregateRootInitializer<Payment, Paymen
       try {
         Integer.parseInt(date);
       } catch(Exception e) {
-        errors.put("expiryDate", "payment.expiryDate 의 형식이 올바르지 않습니다. expect: MM/YY result: " + target.getExpiryDate());
+        errors.put("expiryDate", "payment.expiryDate 의 형식이 올바르지 않습니다. expect: MM/YY actual: " + target.getExpiryDate());
         return;
       }
     }

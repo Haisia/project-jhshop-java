@@ -6,6 +6,7 @@ import com.haisia.shop.common.domain.exception.DomainException;
 import com.haisia.shop.common.domain.ports.output.repository.EventPayloadRepository;
 import com.haisia.shop.common.domain.saga.SagaStatus;
 import com.haisia.shop.common.domain.valueobject.id.OrderId;
+import com.haisia.shop.order.service.domain.order.OrderDomainService;
 import com.haisia.shop.order.service.domain.order.entity.Order;
 import com.haisia.shop.order.service.domain.order.exception.OrderNotFoundException;
 import com.haisia.shop.order.service.domain.order.valuobject.OrderStatus;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderCreatedMessageService implements OrderCreatedUsecase {
 
   private final OrderRepository orderRepository;
+  private final OrderDomainService orderDomainService;
   private final EventPayloadRepository eventPayloadRepository;
 
   @Override
@@ -38,7 +40,7 @@ public class OrderCreatedMessageService implements OrderCreatedUsecase {
         () -> new OrderNotFoundException("Order 를 찾을 수 없습니다. orderId = " + orderId.getValue().toString())
       );
     order.addFailureMessages(payload.getFailureMessages());
-    order.changeStatus(OrderStatus.CANCELLED);
+    orderDomainService.cancel(order);
 
     EventPayload eventPayload = eventPayloadRepository.findById(payload.getSagaId())
       .orElseThrow(

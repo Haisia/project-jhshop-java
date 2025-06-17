@@ -6,6 +6,7 @@ import com.haisia.shop.common.domain.valueobject.Money;
 import com.haisia.shop.common.domain.valueobject.id.OrderId;
 import com.haisia.shop.common.domain.valueobject.id.ProductId;
 import com.haisia.shop.common.domain.valueobject.id.UserAuthId;
+import com.haisia.shop.order.service.domain.order.exception.OrderDomainException;
 import com.haisia.shop.order.service.domain.order.valuobject.OrderStatus;
 import com.haisia.shop.order.service.domain.order.valuobject.TrackingId;
 import jakarta.persistence.*;
@@ -134,16 +135,29 @@ public class Order extends AggregateRoot<OrderId> {
     return orderItem;
   }
 
-  public void changeStatus(OrderStatus status) {
-    this.orderStatus = status;
-  }
-
   public void addFailureMessage(String message) {
     if (message == null) return;
     this.failureMessage = failureMessage == null ? message : String.join(",", this.failureMessage, message, message);
   }
+
   public void addFailureMessages(List<String> messages) {
     if (messages == null) return;
     addFailureMessage(messages.isEmpty() ? null : String.join(",", messages));
+  }
+
+  public void pay() {
+    if (orderStatus != OrderStatus.PENDING) {
+      throw new OrderDomainException(String.format(
+        "orderStatus 가 기대값과 다릅니다. expect: %s, actual: %s",
+        OrderStatus.PENDING,
+        orderStatus
+      ));
+    }
+
+    orderStatus = OrderStatus.PAID;
+  }
+
+  public void cancel() {
+    orderStatus = OrderStatus.CANCELLED;
   }
 }

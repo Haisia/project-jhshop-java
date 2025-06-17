@@ -57,7 +57,7 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
           return Money.ZERO;
         }
         if (!price.multiply(quantity).equals(subTotal)) {
-          String message = String.format("기대값과 다릅니다. expect: %s result: %s", price.multiply(quantity), subTotal);
+          String message = String.format("기대값과 다릅니다. expect: %s actual: %s", price.multiply(quantity), subTotal);
           errors.put("order.orderItem.subTotal", message);
           return Money.ZERO;
         }
@@ -66,7 +66,7 @@ public class OrderInitializer extends AggregateRootInitializer<Order, OrderDomai
       .reduce(Money.ZERO, Money::add);
 
     if (!totalPrice.equals(target.getPrice())) {
-      String message = String.format("price 가 예상과 다릅니다. expect: %s result: %s", totalPrice, target.getPrice());
+      String message = String.format("price 가 예상과 다릅니다. expect: %s actual: %s", totalPrice, target.getPrice());
       errors.put("price", message);
     }
   }
