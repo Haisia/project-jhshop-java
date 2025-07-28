@@ -8,3 +8,7 @@ dependencies {
   implementation project(":common:common-domain")
   implementation "org.springframework:spring-messaging"
 }
+
+bootJar {
+  enabled false
+}

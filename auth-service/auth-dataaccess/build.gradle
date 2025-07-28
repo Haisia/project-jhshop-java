@@ -10,3 +10,7 @@ dependencies {
 
   implementation "io.hypersistence:hypersistence-utils-hibernate-63:$hypersistenceUtilsHibernateVersion"
 }
+
+bootJar {
+  enabled false
+}

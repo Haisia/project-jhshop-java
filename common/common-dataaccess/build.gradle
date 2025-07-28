@@ -12,3 +12,7 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-data-redis'
   implementation "io.hypersistence:hypersistence-utils-hibernate-63:$hypersistenceUtilsHibernateVersion"
 }
+
+bootJar {
+  enabled false
+}

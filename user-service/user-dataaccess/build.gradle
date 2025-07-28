@@ -8,3 +8,7 @@ dependencies {
   api project(":common:common-dataaccess")
   implementation project(":user-service:user-domain:user-application-service")
 }
+
+bootJar {
+  enabled false
+}

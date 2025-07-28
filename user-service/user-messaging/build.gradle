@@ -12,3 +12,7 @@ dependencies {
   implementation "org.springframework.cloud:spring-cloud-starter-stream-kafka"
   implementation "org.springframework.cloud:spring-cloud-function-context"
 }
+
+bootJar {
+  enabled false
+}
